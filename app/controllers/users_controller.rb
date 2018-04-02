@@ -30,7 +30,9 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to root_url, notice: 'Usuario creado correctamente.' }
+        session[:user] = @user.id
+        session[:user_name] = @user.name
+        format.html { redirect_to notes_path, notice: 'Usuario creado correctamente.' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
