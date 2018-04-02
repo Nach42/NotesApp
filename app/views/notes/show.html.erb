@@ -1,0 +1,20 @@
+
+<p>
+  <strong>Title:</strong>
+  <%= @note.title %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @note.body %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @note.user %>
+</p>
+
+<% if @note.user.id == session[:user] %>
+	<%= link_to 'Edit', edit_note_path(@note) %>
+<% end %>
+<%= link_to 'Back', notes_path %>
