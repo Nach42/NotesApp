@@ -10,7 +10,7 @@
 
 <p>
   <strong>User:</strong>
-  <%= @note.user %>
+  <%= @note.user.name %>
 </p>
 
 <% if @note.user.id == session[:user] %>

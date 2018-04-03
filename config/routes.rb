@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   get "logout" => 'session#destroy', :as => "logout"
   post "login" => 'session#create'
   get "signup" => 'users#new', :as => "signup"
+
+  get "users/:id/notes" => 'users#user_notes', :as => "perfil"
   
   resources :users
   resources :notes

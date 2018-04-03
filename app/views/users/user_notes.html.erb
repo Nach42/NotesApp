@@ -1,0 +1,9 @@
+<div>
+	<h1>Tus Notas</h1>
+	<% @notes.each do |note| %>
+		<h3><%= note.title %></h3>
+		<p><%= note.body %></p>
+		<%= link_to 'Edit', edit_note_path(note) %>
+	<% end %>
+
+</div>

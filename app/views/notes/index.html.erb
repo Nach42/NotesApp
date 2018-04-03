@@ -15,7 +15,7 @@
       <tr>
         <td><%= note.title %></td>
         <td><%= note.body %></td>
-        <td><%= note.user %></td>
+        <td><%= note.user.name %></td>
         <td><%= link_to 'Show', note %></td>
         <% if note.user.id == session[:user] %>
           <td><%= link_to 'Edit', edit_note_path(note) %></td>
