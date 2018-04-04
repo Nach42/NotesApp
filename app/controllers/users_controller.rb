@@ -32,7 +32,7 @@ class UsersController < ApplicationController
       if @user.save
         session[:user] = @user.id
         session[:user_name] = @user.name
-        format.html { redirect_to notes_path, notice: 'Usuario creado correctamente.' }
+        format.html { redirect_to welcome_path, notice: 'Usuario creado correctamente.' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -60,7 +60,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      format.html { redirect_to (@user.id == session[:user] ? logout_path : users_path), notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

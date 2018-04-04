@@ -1,36 +1,39 @@
 class NotesController < ApplicationController
   before_action :set_note, only: [:show, :edit, :update, :destroy]
   before_action :authenticate
-  before_action :note_author, only: [:edit, :destroy]
-  # GET /notes
-  # GET /notes.json
+  before_action :note_author, only: [:destroy]
+  
+  #GET /users/1/notes
+  #user_notes_path(user_id)
   def index
-    @notes = Note.all
+    @notes = Note.where user: session[:user]
   end
 
-  # GET /notes/1
-  # GET /notes/1.json
+  #GET /users/1/notes/1
+  #user_note_path(note.user, note)
   def show
   end
 
-  # GET /notes/new
+  #GET /users/1/notes/new
+  #new_user_note_path
   def new
     @note = Note.new
   end
 
-  # GET /notes/1/edit
+  # GET /users/1/notes/1/edit
+  #edit_user_note_path(note.user, note)
   def edit
   end
 
-  # POST /notes
-  # POST /notes.json
+  # POST /users/1/notes
+  # 
   def create
     @note = Note.new(note_params)
     @note.user = User.find(session[:user])
 
     respond_to do |format|
       if @note.save
-        format.html { redirect_to @note, notice: 'Note was successfully created.' }
+        format.html { redirect_to user_note_path(@note.user, @note), notice: 'Note was successfully created.' }
         format.json { render :show, status: :created, location: @note }
       else
         format.html { render :new }
@@ -39,12 +42,12 @@ class NotesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /notes/1
+  # PATCH/PUT /users/1/notes/1
   # PATCH/PUT /notes/1.json
   def update
     respond_to do |format|
       if @note.update(note_params)
-        format.html { redirect_to @note, notice: 'Note was successfully updated.' }
+        format.html { redirect_to user_note_path(@note.user, @note), notice: 'Note was successfully updated.' }
         format.json { render :show, status: :ok, location: @note }
       else
         format.html { render :edit }
@@ -58,7 +61,7 @@ class NotesController < ApplicationController
   def destroy
     @note.destroy
     respond_to do |format|
-      format.html { redirect_to notes_url, notice: 'Note was successfully destroyed.' }
+      format.html { redirect_to user_notes_path(session[:user]), notice: 'Note was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

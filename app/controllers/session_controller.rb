@@ -1,7 +1,7 @@
 class SessionController < ApplicationController
   def new
   	if session[:user]
-  		redirect_to root_url, :notice => "Ya has iniciado sesión"
+  		redirect_to user_notes_path(session[:user]), :notice => "Ya has iniciado sesión"
   	end
   end
 
@@ -14,7 +14,7 @@ class SessionController < ApplicationController
   	elsif @user.password == params[:password]
   		session[:user] = @user.id
   		session[:user_name] = @user.name
-  		redirect_to notes_path, :notice => "Logged in!"
+  		redirect_to welcome_path, :notice => "Logged in!"
   	else
   		flash.now.alert = "password was invalid"
   		render :new
