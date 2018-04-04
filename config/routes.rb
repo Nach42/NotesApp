@@ -5,10 +5,11 @@ Rails.application.routes.draw do
   post "login" => 'session#create'
   get "signup" => 'users#new', :as => "signup"
 
-  get "users/:id/notes" => 'users#user_notes', :as => "perfil"
-  
-  resources :users
-  resources :notes
+  #get "users/:id/notes" => 'users#user_notes', :as => "perfil"
+  get "welcome" => 'welcome#welcome', as: "welcome"
+  resources :users do
+  	resources :notes
+  end
 
   root 'welcome#index'
 end

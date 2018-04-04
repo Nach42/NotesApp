@@ -16,16 +16,13 @@
         <td><%= note.title %></td>
         <td><%= note.body %></td>
         <td><%= note.user.name %></td>
-        <td><%= link_to 'Show', note %></td>
-        <% if note.user.id == session[:user] %>
-          <td><%= link_to 'Edit', edit_note_path(note) %></td>
-          <td><%= link_to 'Destroy', note, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
+        <td><%= link_to 'Show', user_note_path(note.user, note) %></td>
+        <td><%= link_to 'Edit', edit_user_note_path(note.user, note) %></td>
+        <td><%= link_to 'Destroy', user_note_path(note.user, note), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Note', new_note_path %>
+<%= link_to "New Note", new_user_note_path %>
