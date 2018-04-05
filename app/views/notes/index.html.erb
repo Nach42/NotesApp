@@ -13,12 +13,14 @@
   <tbody>
     <% @notes.each do |note| %>
       <tr>
-        <td><%= note.title %></td>
+        <td><strong><%= note.title %></strong></td>
         <td><%= note.body %></td>
-        <td><%= note.user.name %></td>
+        <td><%= note.user.name %></td> 
         <td><%= link_to 'Show', user_note_path(note.user, note) %></td>
-        <td><%= link_to 'Edit', edit_user_note_path(note.user, note) %></td>
-        <td><%= link_to 'Destroy', user_note_path(note.user, note), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if @user.id == session[:user] %>
+          <td><%= link_to 'Edit', edit_user_note_path(note.user, note) %></td>
+          <td><%= link_to 'Destroy', user_note_path(note.user, note), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

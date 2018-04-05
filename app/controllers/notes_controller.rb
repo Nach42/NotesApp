@@ -1,12 +1,13 @@
 class NotesController < ApplicationController
   before_action :set_note, only: [:show, :edit, :update, :destroy]
   before_action :authenticate
+  before_action :set_user
   before_action :note_author, only: [:destroy]
   
   #GET /users/1/notes
   #user_notes_path(user_id)
   def index
-    @notes = Note.where user: session[:user]
+    @notes = Note.where user: @user.id
   end
 
   #GET /users/1/notes/1
@@ -29,7 +30,7 @@ class NotesController < ApplicationController
   # 
   def create
     @note = Note.new(note_params)
-    @note.user = User.find(session[:user])
+    @note.user = @user
 
     respond_to do |format|
       if @note.save
@@ -47,7 +48,7 @@ class NotesController < ApplicationController
   def update
     respond_to do |format|
       if @note.update(note_params)
-        format.html { redirect_to user_note_path(@note.user, @note), notice: 'Note was successfully updated.' }
+        format.html { redirect_to user_note_path(@note), notice: 'Note was successfully updated.' }
         format.json { render :show, status: :ok, location: @note }
       else
         format.html { render :edit }
@@ -61,7 +62,7 @@ class NotesController < ApplicationController
   def destroy
     @note.destroy
     respond_to do |format|
-      format.html { redirect_to user_notes_path(session[:user]), notice: 'Note was successfully destroyed.' }
+      format.html { redirect_to user_notes_path(), notice: 'Note was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -70,6 +71,9 @@ class NotesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_note
       @note = Note.find(params[:id])
+    end
+    def set_user
+      @user = User.find(params[:user_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

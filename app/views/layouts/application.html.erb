@@ -18,7 +18,6 @@
 
   <body>
   	<%= render "layouts/nav" %>
-  	<br>
 
   	<div id="container" class="body">
 		<div class="user_nav">
@@ -33,6 +32,7 @@
 		<% flash.each do |name, msg| %>
 			<%= content_tag :div, msg, :id => "flash_#{name}", class: (name == 'notice' ? "notice" : "alert") %>
 		<% end %>
+		<br>
 		<%= yield %>
 	</div>
   </body>

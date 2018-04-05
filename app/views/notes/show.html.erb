@@ -1,7 +1,6 @@
-<p>
-  <strong>Title:</strong>
+<h2>
   <%= @note.title %>
-</p>
+</h2>
 
 <p>
   <strong>Body:</strong>
@@ -12,8 +11,8 @@
   <strong>User:</strong>
   <%= @note.user.name %>
 </p>
-
-<% if @note.user.id == session[:user] %>
-	<%= link_to 'Edit', edit_user_note_path(@note.user, @note) %>
-<% end %>
 <%= link_to 'Back', user_notes_path %>
+<% if @user.id == session[:user] %>
+	<%= link_to 'Edit', edit_user_note_path(@note.user, @note) %>
+	<%= link_to 'Destroy', user_note_path(@note.user, @note), method: :delete, data: { confirm: 'Are you sure?' } %>
+<% end %>
