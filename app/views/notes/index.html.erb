@@ -27,4 +27,6 @@
 </table>
 
 <br>
-<%= link_to "New Note", new_user_note_path %>
+<% if @user.id == session[:user] %>
+  <%= link_to "New Note", new_user_note_path %>
+<% end %>

@@ -18,6 +18,9 @@ class NotesController < ApplicationController
   #GET /users/1/notes/new
   #new_user_note_path
   def new
+    unless @user.id == session[:user]
+      redirect_to user_notes_path, alert: "No puedes realizar esta acción"
+    end
     @note = Note.new
   end
 
@@ -30,7 +33,7 @@ class NotesController < ApplicationController
   # 
   def create
     @note = Note.new(note_params)
-    @note.user = @user
+    @note.user = User.find(session[:user])
 
     respond_to do |format|
       if @note.save
