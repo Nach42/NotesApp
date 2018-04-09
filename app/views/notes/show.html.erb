@@ -11,6 +11,7 @@
   <strong>User:</strong>
   <%= @note.user.name %>
 </p>
+
 <%= link_to 'Back', user_notes_path %>
 <% if @user.id == session[:user] %>
 	<%= link_to 'Edit', edit_user_note_path(@note.user, @note) %>
