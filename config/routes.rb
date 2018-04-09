@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get "welcome" => 'welcome#welcome', as: "welcome"
   resources :users do
   	resources :notes
+    resources :collections
   end
 
   root 'welcome#index'

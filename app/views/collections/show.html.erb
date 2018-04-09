@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @collection.name %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @collection.user.name %>
+</p>
+
+<%= link_to 'Edit', edit_user_collection_path(@collection.user, @collection) %> |
+<%= link_to 'Back', user_collections_path %>
