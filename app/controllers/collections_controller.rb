@@ -1,11 +1,13 @@
 class CollectionsController < ApplicationController
   before_action :set_collection, only: [:show, :edit, :update, :destroy]
   before_action :set_user
+  before_action :authenticate
+  before_action :collection_author, only: [:show, :new, :edit, :desrtoy]
 
   # GET /collections
   # GET /collections.json
   def index
-    @collections = Collection.all
+    @collections = Collection.where id: @user.id
   end
 
   # GET /collections/1
@@ -71,6 +73,18 @@ class CollectionsController < ApplicationController
 
     def set_user
       @user = User.find(params[:user_id])
+    end
+
+    def collection_author
+      unless @user.id == session[:user]
+        redirect_to user_collections_path(@user.id), alert: "No puedes realizar esta acción"
+      end
+    end
+
+    def authenticate
+      unless session[:user]
+        redirect_to login_path, alert: "Necesitas registrarte para realizar esta acción"
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

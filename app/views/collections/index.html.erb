@@ -1,6 +1,10 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Collections</h1>
+<% if @user.id == session[:user] %>
+  <h1>My Collections </h1>
+<% else %>
+  <h1>Collections by <%= @user.name %> </h1>
+<% end %>
 
 <table>
   <thead>
@@ -18,13 +22,16 @@
         <td><%= collection.name %></td>
         <td><%= collection.user.name %></td>
         <td><%= link_to 'Show', user_collection_path(collection.user, collection) %></td>
-        <td><%= link_to 'Edit', edit_user_collection_path(collection.user, collection) %></td>
-        <td><%= link_to 'Destroy', user_collection_path(collection.user, collection), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if collection.user.id == session[:user] %>
+          <td><%= link_to 'Edit', edit_user_collection_path(collection.user, collection) %></td>
+          <td><%= link_to 'Destroy', user_collection_path(collection.user, collection), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Collection', new_user_collection_path %>
+<% if @user.id == session[:user] %>
+  <%= link_to 'New Collection', new_user_collection_path %>
+<% end %>

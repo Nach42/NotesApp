@@ -1,4 +1,8 @@
-<h1>Notes</h1>
+<% if @user.id == session[:user] %>
+  <h1>My Notes</h1>
+<% else %>
+  <h1>Notes by <%= @user.name %></h1>
+<% end %>
 
 <table>
   <thead>
