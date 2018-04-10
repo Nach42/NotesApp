@@ -2,4 +2,4 @@
 
 <%= render 'form', note: @note %>
 
-<%= link_to 'Back', user_note_path(@note) %>
+<%= link_to 'Back', user_note_path(@user.id, @note) %>
