@@ -6,7 +6,11 @@
 	<h3>Notes:</h3>
 	<ul class="collection-notes no-list">
 	<% @collection.notes.each do |note| %>
-		<li><%= link_to note.title, user_note_path(note.user, note) %></li>
+		<li><%= link_to note.title, user_note_path(note.user, note) %> - 
+			<% if @user.id == session[:user]%>
+				Quit
+			<% end %>
+		</li>
 	<% end %>
 	</ul>
 </div>
@@ -16,7 +20,8 @@
   <%= @collection.user.name %>
 </p>
 
+<%= link_to 'Back', user_collections_path %>
 <% if @user.id == session[:user] %>
 	<%= link_to 'Edit', edit_user_collection_path(@collection.user, @collection) %>
+	<%= link_to 'Destroy', user_collection_path(@collection.user, @collection), method: :delete, data: { confirm: 'Are you sure?' } %>
 <% end %>
-<%= link_to 'Back', user_collections_path %>

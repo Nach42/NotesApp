@@ -65,7 +65,7 @@ class NotesController < ApplicationController
   def destroy
     @note.destroy
     respond_to do |format|
-      format.html {redirect_to user_notes_path(), notice: 'Note was successfully destroyed.'}
+      format.html {redirect_to user_notes_path(@user), notice: 'Note was successfully destroyed.'}
       format.json {head :no_content}
     end
   end

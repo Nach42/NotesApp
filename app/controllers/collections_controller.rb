@@ -26,6 +26,7 @@ class CollectionsController < ApplicationController
 
   # GET /collections/1/edit
   def edit
+    @notes = Note.where user: @user
   end
 
   # POST /collections
@@ -49,6 +50,7 @@ class CollectionsController < ApplicationController
   # PATCH/PUT /collections/1
   # PATCH/PUT /collections/1.json
   def update
+    @collection.notes = params[:notes]
     respond_to do |format|
       if @collection.update(collection_params)
         format.html { redirect_to user_collection_path(@collection.user, @collection), notice: 'Collection was successfully updated.' }
@@ -65,7 +67,7 @@ class CollectionsController < ApplicationController
   def destroy
     @collection.destroy
     respond_to do |format|
-      format.html { redirect_to user_collections_path(), notice: 'Collection was successfully destroyed.' }
+      format.html { redirect_to user_collections_path(@user), notice: 'Collection was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
