@@ -2,18 +2,17 @@ class NotesController < ApplicationController
   before_action :set_note, only: [:show, :edit, :update, :destroy]
   before_action :authenticate
   before_action :set_user
-  before_action :note_author, only: [:destroy]
+  before_action :note_author, only: [:destroy, :update, :create, :edit]
 
   #GET /users/1/notes
   #user_notes_path(user_id)
   def index
-    @notes = Note.where user: @user.id
+    @notes = Note.where user: @user
   end
 
   #GET /users/1/notes/1
   #user_note_path(note.user, note)
   def show
-    @collections = Collection.where user_id: session[:user]
   end
 
   #GET /users/1/notes/new
@@ -52,7 +51,7 @@ class NotesController < ApplicationController
   def update
     respond_to do |format|
       if @note.update(note_params)
-        format.html {redirect_to user_note_path(@note), notice: 'Note was successfully updated.'}
+        format.html {redirect_to user_note_path(@note.user, @note), notice: 'Note was successfully updated.'}
         format.json {render :show, status: :ok, location: @note}
       else
         format.html {render :edit}
@@ -94,8 +93,8 @@ class NotesController < ApplicationController
   end
 
   def note_author
-    unless @note.user.id == session[:user]
-      redirect_to notes_path, alert: "No puedes realizar esta acción"
+    unless @user.id == session[:user]
+      redirect_to user_notes_path(@note.user), alert: "No puedes realizar esta acción"
     end
   end
 end

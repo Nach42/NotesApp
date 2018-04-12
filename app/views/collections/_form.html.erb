@@ -16,6 +16,15 @@
     <%= form.text_field :name, id: :collection_name %>
   </div>
 
+  <div class="field">
+    <label>Notes:</label>
+    <div class="field collection-notes">
+      <% @notes.each do |n| %>
+        <p><%= check_box_tag "notes[]", n.id %> <%= n.title %></p>
+      <% end %>
+    </div>
+  </div>
+  
   <div class="actions">
     <%= form.submit %>
   </div>

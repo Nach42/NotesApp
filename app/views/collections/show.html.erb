@@ -1,14 +1,21 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
+<h1>
   <%= @collection.name %>
-</p>
+</h1>
+
+<div>
+	<h3>Notes:</h3>
+	<ul class="collection-notes no-list">
+	<% @collection.notes.each do |note| %>
+		<li><%= link_to note.title, user_note_path(note.user, note) %></li>
+	<% end %>
+	</ul>
+</div>
 
 <p>
   <strong>User:</strong>
   <%= @collection.user.name %>
 </p>
+
 <% if @user.id == session[:user] %>
 	<%= link_to 'Edit', edit_user_collection_path(@collection.user, @collection) %>
 <% end %>

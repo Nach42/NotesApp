@@ -2,7 +2,7 @@ class CollectionsController < ApplicationController
   before_action :set_collection, only: [:show, :edit, :update, :destroy]
   before_action :set_user
   before_action :authenticate
-  before_action :collection_author, only: [:show, :new, :edit, :desrtoy]
+  before_action :collection_author, only: [:edit, :desrtoy, :update, :create]
 
   # GET /collections
   # GET /collections.json
@@ -17,6 +17,10 @@ class CollectionsController < ApplicationController
 
   # GET /collections/new
   def new
+    unless @user.id == session[:user]
+      redirect_to user_collections_path, alert: "No puedes realizar esta acción"
+    end
+    @notes = Note.where user: @user
     @collection = Collection.new
   end
 
@@ -28,6 +32,7 @@ class CollectionsController < ApplicationController
   # POST /collections.json
   def create
     @collection = Collection.new(collection_params)
+    @collection.notes = params[:notes]
     @collection.user = User.find(session[:user])
 
     respond_to do |format|
@@ -46,7 +51,7 @@ class CollectionsController < ApplicationController
   def update
     respond_to do |format|
       if @collection.update(collection_params)
-        format.html { redirect_to user_collection_path(@collection), notice: 'Collection was successfully updated.' }
+        format.html { redirect_to user_collection_path(@collection.user, @collection), notice: 'Collection was successfully updated.' }
         format.json { render :show, status: :ok, location: @collection }
       else
         format.html { render :edit }
