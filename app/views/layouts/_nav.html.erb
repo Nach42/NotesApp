@@ -1,19 +1,22 @@
 <header>
-  <nav class="be-red white large-padding">
-   <ul class="row no-list middle-xs">
-      <li>
-        <h1 id="logo" class="no-margin"><%= link_to "NotesApp", welcome_path %></h1>
-      </li>
-      <% if session[:user] %>
-      	<li><%= link_to "My Notes", user_notes_path(session[:user]) %></li>
-      	<li><%= link_to "My Collections", user_collections_path(session[:user]) %></li>
-      	<li><%= link_to "Friends", welcome_path %></li>
-      	<div>
-      		<ul class="no-list">
-      			<li><%= link_to "Perfil", user_path(session[:user]) %></li>
-      			<li><%= link_to "Cerrar Sesión", logout_path %></li>
-      		</ul>
-      	</div>
-      <% end %>
-    </ul>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <%= link_to "NotesApp", welcome_path, class: "navbar-brand" %>
+      </div>
+        <ul class="nav navbar-nav">
+          <% if session[:user] %>
+            <li class="active"><%= link_to "My Notes", user_notes_path(session[:user]) %></li>
+            <li><%= link_to "My Collections", user_collections_path(session[:user]) %></li>
+            <li><%= link_to "Friends", welcome_path %></li>
+          </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li><%= link_to "Perfil", user_path(session[:user])%></li>
+                <li><%= link_to "Cerrar Sesión", logout_path %></li>
+              </ul>
+            </div>
+          <% end %>
+        </ul>
+    </div>
+  </nav>
 </header>

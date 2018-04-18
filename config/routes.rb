@@ -8,10 +8,10 @@ Rails.application.routes.draw do
 
   get '/users/:user_id/collections/:id/notes/:note_id', to: 'collections#destroy_note', :as => "delete_note_collection"
 
-  #get "users/:id/notes" => 'users#user_notes', :as => "perfil"
+  # get "users/:id/notes" => 'users#user_notes', :as => "perfil"
   get "welcome" => 'welcome#welcome', as: "welcome"
   resources :users do
-  	resources :notes
+    resources :notes
     resources :collections
   end
 
