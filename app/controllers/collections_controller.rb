@@ -74,10 +74,10 @@ class CollectionsController < ApplicationController
   end
 
   def destroy_note
-    @has_collection = HasCollection.where note_id: @note.id, collection_id: @collection.id 
-    @has_collection.destroy
+    HasCollection.where(note_id: @note.id, collection_id: @collection.id).destroy_all
+    
     respond_to do |format|
-      format.html { redirect_to user_collections_path(@user), notice: 'Collection was successfully destroyed.' }
+      format.html { redirect_to user_collection_path(@user, @collection), notice: 'Collection was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
