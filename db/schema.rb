@@ -33,8 +33,10 @@ ActiveRecord::Schema.define(version: 20180411142712) do
     t.string "title"
     t.text "body"
     t.integer "user_id"
+    t.integer "collection_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["collection_id"], name: "index_notes_on_collection_id"
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
 

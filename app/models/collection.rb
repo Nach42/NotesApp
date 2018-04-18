@@ -1,9 +1,10 @@
 class Collection < ApplicationRecord
   belongs_to :user
-  has_many :has_collections
+  has_many :has_collections, dependent: :delete_all
   has_many :notes, through: :has_collections
   validates :name, presence: true
   after_save :save_notes
+
 
   def notes=(value)
   	@notes = value
