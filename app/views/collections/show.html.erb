@@ -8,7 +8,7 @@
 	<% @collection.notes.each do |note| %>
 		<li><%= link_to note.title, user_note_path(note.user, note) %> - 
 			<% if @user.id == session[:user]%>
-				Quit
+				<%= link_to "Quit", delete_note_collection_path(@user, @collection, note.id) %>
 			<% end %>
 		</li>
 	<% end %>

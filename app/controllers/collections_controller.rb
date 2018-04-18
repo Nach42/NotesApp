@@ -1,8 +1,9 @@
 class CollectionsController < ApplicationController
-  before_action :set_collection, only: [:show, :edit, :update, :destroy]
+  before_action :set_collection, only: [:show, :edit, :update, :destroy, :destroy_note]
   before_action :set_user
   before_action :authenticate
   before_action :collection_author, only: [:edit, :desrtoy, :update, :create]
+  before_action :set_note, only: [:destroy_note]
 
   # GET /collections
   # GET /collections.json
@@ -72,6 +73,15 @@ class CollectionsController < ApplicationController
     end
   end
 
+  def destroy_note
+    @has_collection = HasCollection.where note_id: @note.id, collection_id: @collection.id 
+    @has_collection.destroy
+    respond_to do |format|
+      format.html { redirect_to user_collections_path(@user), notice: 'Collection was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_collection
@@ -80,6 +90,10 @@ class CollectionsController < ApplicationController
 
     def set_user
       @user = User.find(params[:user_id])
+    end
+
+    def set_note
+      @note = Note.find(params[:note_id])
     end
 
     def collection_author
