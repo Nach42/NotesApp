@@ -2,7 +2,7 @@ class CollectionsController < ApplicationController
   before_action :set_collection, only: [:show, :edit, :update, :destroy]
   before_action :set_user
   before_action :authenticate
-  before_action :collection_author, only: [:show, :new, :edit, :desrtoy]
+  before_action :collection_author, only: [:edit, :desrtoy, :update, :create]
 
   # GET /collections
   # GET /collections.json
@@ -17,17 +17,23 @@ class CollectionsController < ApplicationController
 
   # GET /collections/new
   def new
+    unless @user.id == session[:user]
+      redirect_to user_collections_path, alert: "No puedes realizar esta acción"
+    end
+    @notes = Note.where user: @user
     @collection = Collection.new
   end
 
   # GET /collections/1/edit
   def edit
+    @notes = Note.where user: @user
   end
 
   # POST /collections
   # POST /collections.json
   def create
     @collection = Collection.new(collection_params)
+    @collection.notes = params[:notes]
     @collection.user = User.find(session[:user])
 
     respond_to do |format|
@@ -44,9 +50,10 @@ class CollectionsController < ApplicationController
   # PATCH/PUT /collections/1
   # PATCH/PUT /collections/1.json
   def update
+    @collection.notes = params[:notes]
     respond_to do |format|
       if @collection.update(collection_params)
-        format.html { redirect_to user_collection_path(@collection), notice: 'Collection was successfully updated.' }
+        format.html { redirect_to user_collection_path(@collection.user, @collection), notice: 'Collection was successfully updated.' }
         format.json { render :show, status: :ok, location: @collection }
       else
         format.html { render :edit }
@@ -60,7 +67,7 @@ class CollectionsController < ApplicationController
   def destroy
     @collection.destroy
     respond_to do |format|
-      format.html { redirect_to user_collections_path(), notice: 'Collection was successfully destroyed.' }
+      format.html { redirect_to user_collections_path(@user), notice: 'Collection was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
