@@ -18,14 +18,14 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body style="background-color: grey">
   	<%= render "layouts/nav" %>
-
-  	<div id="container" class="body">
+  	<div class="container">
+  		
 		<div class="user_nav">
 			<% if session[:user] %>
-				Logged in as <%= link_to session[:user_name], user_path(session[:user]) %>.
-				<%= link_to "Log out", logout_path %>
+				<!--Logged in as <%= link_to session[:user_name], user_path(session[:user]) %>.
+				<%= link_to "Log out", logout_path %> -->
 			<% else %>
 				<%= link_to "Sign up", signup_path %> or
 				<%= link_to "log in", login_path %>.

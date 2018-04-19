@@ -1,36 +1,31 @@
 <% if @user.id == session[:user] %>
-  <h1>My Notes</h1>
+  <div class="text-center"><h1>My Notes</h1></div>
 <% else %>
-  <h1>Notes by <%= @user.name %></h1>
+  <div class="text-center"><h1>Notes by <%= @user.name %></h1></div>
 <% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Body</th>
-      <th>User</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
+<div>
+  <% if @user.id == session[:user] %>
+  <div class="text-center"><%= link_to "New Note", new_user_note_path,class:"btn btn-success" %></div>
+<% end %>
     <% @notes.each do |note| %>
-      <tr>
-        <td><strong><%= note.title %></strong></td>
-        <td><%= note.body %></td>
-        <td><%= note.user.name %></td> 
-        <td><%= link_to 'Show', user_note_path(note.user, note) %></td>
+        <div class="row">
+        
+        <div><strong><%= note.title %></strong></div>
+        
+        <div><%= note.body %></div>
+        
+        <div>Written by <%= note.user.name %> <%= time_ago_in_words(note.updated_at) %> ago </td> </div>
+        
+        <div><%= link_to 'Show', user_note_path(note.user, note),class:"btn btn-primary" %></td>
         <% if @user.id == session[:user] %>
-          <td><%= link_to 'Edit', edit_user_note_path(note.user, note) %></td>
-          <td><%= link_to 'Destroy', user_note_path(note.user, note), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <%= link_to 'Edit', edit_user_note_path(note.user, note),class:"btn btn-warning" %></td>
+          <%= link_to 'Destroy', user_note_path(note.user, note), class:"btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
         <% end %>
-      </tr>
+      </div>
+      </div>
     <% end %>
-  </tbody>
-</table>
+
+</div>
 
 <br>
-<% if @user.id == session[:user] %>
-  <%= link_to "New Note", new_user_note_path %>
-<% end %>
