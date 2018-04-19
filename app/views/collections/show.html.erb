@@ -1,8 +1,12 @@
 <h1>
   <%= @collection.name %>
 </h1>
-
+</br>
 <div>
+	<p>
+  		<strong>User:</strong>
+  		<%= @collection.user.name %>
+	</p>
 	<h3>Notes:</h3>
 	<ul class="collection-notes no-list">
 	<% @collection.notes.each do |note| %>
@@ -14,11 +18,6 @@
 	<% end %>
 	</ul>
 </div>
-
-<p>
-  <strong>User:</strong>
-  <%= @collection.user.name %>
-</p>
 
 <%= link_to 'Back', user_collections_path %>
 <% if @user.id == session[:user] %>
