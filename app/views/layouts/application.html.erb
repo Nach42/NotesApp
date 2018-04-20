@@ -19,10 +19,13 @@
   </head>
 
   <body style="background-color: grey">
-  	<%= render "layouts/nav" %>
+  
+  	
+<%= render "layouts/nav" %>
   	<div class="container">
-  		
-		<div class="user_nav">
+
+  		<div class="row">
+		<div class="user_nav text-center">
 			<% if session[:user] %>
 				<!--Logged in as <%= link_to session[:user_name], user_path(session[:user]) %>.
 				<%= link_to "Log out", logout_path %> -->
@@ -37,5 +40,6 @@
 		<br>
 		<%= yield %>
 	</div>
+</div>
   </body>
 </html>
