@@ -5,19 +5,19 @@
 </div>
 
 <div class="row large-padding">
-<p>
-  <strong>Body:</strong>
-  <%= @note.body %>
-</p>
+	<p>
+	  <strong>Body:</strong>
+	  <%= @note.body %>
+	</p>
 
-<p>
-  <strong>User:</strong>
-  <%= @note.user.name %>
-</p>
+	<p>
+	  <strong>User:</strong>
+	  <%= @note.user.name %>
+	</p>
 
-<%= link_to 'Back', user_notes_path %>
-<% if @user.id == session[:user] %>
-	<%= link_to 'Edit', edit_user_note_path(@note.user, @note) %>
-	<%= link_to 'Destroy', user_note_path(@note.user, @note), method: :delete, data: { confirm: 'Are you sure?' } %>
-<% end %>
+	<%= link_to 'Back', user_notes_path %>
+	<% if @user.id == session[:user] %>
+		<%= link_to 'Edit', edit_user_note_path(@note.user, @note) %>
+		<%= link_to 'Destroy', user_note_path(@note.user, @note), method: :delete, data: { confirm: 'Are you sure?' } %>
+	<% end %>
 </div>
