@@ -3,6 +3,7 @@ class CreateNotes < ActiveRecord::Migration[5.1]
     create_table :notes do |t|
       t.string :title
       t.text :body
+      t.string :extension
       t.references :user, foreign_key: true
 
       t.timestamps

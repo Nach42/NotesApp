@@ -10,6 +10,10 @@
 	  <%= @note.body %>
 	</p>
 
+	<div class="field">
+		<%= image_tag @note.photo_path %>
+	</div>
+
 	<p>
 	  <strong>User:</strong>
 	  <%= @note.user.name %>
