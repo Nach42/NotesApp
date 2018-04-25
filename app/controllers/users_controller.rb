@@ -32,7 +32,7 @@ class UsersController < ApplicationController
       if @user.save
         session[:user] = @user.id
         session[:user_name] = @user.name
-        format.html { redirect_to welcome_path, notice: 'Usuario creado correctamente.' }
+        format.html { redirect_to welcome_path, notice: 'Created user successfully' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
