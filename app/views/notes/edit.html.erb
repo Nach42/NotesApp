@@ -1,5 +1,7 @@
 <h1>Editar Nota</h1>
 
-<%= render 'form', note: @note %>
+<div class="row large-padding">
+	<%= render 'form', note: @note %>
 
-<%= link_to 'Back', user_note_path(@user.id, @note) %>
+	<%= link_to 'Back', user_note_path(@user.id, @note) %>
+</div>

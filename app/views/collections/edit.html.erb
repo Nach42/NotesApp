@@ -1,5 +1,6 @@
 <h1>Editing Collection</h1>
+<div class="row large-padding">
+	<%= render 'form', collection: @collection %>
 
-<%= render 'form', collection: @collection %>
-
-<%= link_to 'Back', user_collection_path(@collection.user, @collection) %>
+	<%= link_to 'Back', user_collection_path(@collection.user, @collection) %>
+</div>

@@ -1,34 +1,39 @@
 <% if @user.id == session[:user] %>
-  <h1>My Collections </h1>
+    <div class="text-center"><h1>My Collections </h1></div>
 <% else %>
-  <h1>Collections by <%= @user.name %> </h1>
+  <div class="text-center"><h1>Collections by <%= @user.name %> </h1></div>
 <% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>User</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @collections.each do |collection| %>
-      <tr>
-        <td><%= collection.name %></td>
-        <td><%= collection.user.name %></td>
-        <td><%= link_to 'Show', user_collection_path(collection.user, collection) %></td>
-        <% if collection.user.id == session[:user] %>
-          <td><%= link_to 'Edit', edit_user_collection_path(collection.user, collection) %></td>
-          <td><%= link_to 'Destroy', user_collection_path(collection.user, collection), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
+<div>
 <% if @user.id == session[:user] %>
-  <%= link_to 'New Collection', new_user_collection_path %>
+  <div class="text-center"><%= link_to 'New Collection', new_user_collection_path, class:"btn btn-success" %></div>
 <% end %>
+
+<div class="row large-padding">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>User</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @collections.each do |collection| %>  
+        <tr>
+          <td><%= collection.name %></td>
+          <td><%= collection.user.name %></td>
+          <td><%= link_to 'Show', user_collection_path(collection.user, collection) %></td>
+          <% if collection.user.id == session[:user] %>
+            <td><%= link_to 'Edit', edit_user_collection_path(collection.user, collection) %></td>
+            <td><%= link_to 'Destroy', user_collection_path(collection.user, collection), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+        </tr>
+      </div>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+</div>

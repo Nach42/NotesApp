@@ -1,7 +1,10 @@
-<h2>
-  <%= @note.title %>
-</h2>
+<div class="text-center">
+	<h2>
+  		<%= @note.title %>
+	</h2>
+</div>
 
+<div class="row large-padding">
 <p>
   <strong>Body:</strong>
   <%= @note.body %>
@@ -17,3 +20,4 @@
 	<%= link_to 'Edit', edit_user_note_path(@note.user, @note) %>
 	<%= link_to 'Destroy', user_note_path(@note.user, @note), method: :delete, data: { confirm: 'Are you sure?' } %>
 <% end %>
+</div>
