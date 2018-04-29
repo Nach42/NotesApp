@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180426145305) do
+ActiveRecord::Schema.define(version: 20180426154201) do
 
   create_table "collections", force: :cascade do |t|
     t.string "name"
@@ -40,6 +40,11 @@ ActiveRecord::Schema.define(version: 20180426145305) do
     t.integer "photo_file_size"
     t.datetime "photo_updated_at"
     t.index ["user_id"], name: "index_notes_on_user_id"
+  end
+
+  create_table "relationships", force: :cascade do |t|
+    t.integer "follower_id"
+    t.integer "followed_id"
   end
 
   create_table "users", force: :cascade do |t|
