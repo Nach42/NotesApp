@@ -9,31 +9,16 @@
   <div class="text-center"><%= link_to 'New Collection', new_user_collection_path, class:"btn btn-success" %></div>
 <% end %>
 
-<div class="row large-padding">
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>User</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @collections.each do |collection| %>  
-        <tr>
-          <td><%= collection.name %></td>
-          <td><%= collection.user.name %></td>
-          <td><%= link_to 'Show', user_collection_path(collection.user, collection) %></td>
+  <div class="row large-padding">
+      <% @collections.each do |collection| %>
+          <div><strong><%= collection.name %></strong></div>
+          <div>Created by <%= collection.user.name %> <%= time_ago_in_words(collection.updated_at) %> ago</div>
+          <div><%= link_to 'Show', user_collection_path(collection.user, collection) %>
           <% if collection.user.id == session[:user] %>
-            <td><%= link_to 'Edit', edit_user_collection_path(collection.user, collection) %></td>
-            <td><%= link_to 'Destroy', user_collection_path(collection.user, collection), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <%= link_to 'Edit', edit_user_collection_path(collection.user, collection) %>
+            <%= link_to 'Destroy', user_collection_path(collection.user, collection), method: :delete, data: { confirm: 'Are you sure?' } %>
           <% end %>
-        </tr>
-      </div>
+          </div>
       <% end %>
-    </tbody>
-  </table>
-</div>
-
+  </div>
 </div>

@@ -11,14 +11,10 @@
 	</p>
 
 	<div class="field">
-		<%= image_tag @note.photo_path %>
-		<!--<%= image_tag @note.photo.url %>-->
+		<%= image_tag @note.photo.url %>
 	</div>
 
-	<p>
-	  <strong>User:</strong>
-	  <%= @note.user.name %>
-	</p>
+	<p>Written by <%= @note.user.name %> <%= time_ago_in_words(@note.updated_at) %> ago</p>
 
 	<%= link_to 'Back', user_notes_path %>
 	<% if @user.id == session[:user] %>
