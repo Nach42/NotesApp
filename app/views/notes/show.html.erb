@@ -11,7 +11,9 @@
 	</p>
 
 	<div class="field">
-		<%= image_tag @note.photo.url %>
+		<% if @note.photo.exists? %>
+			<%= image_tag @note.photo.url %>
+		<% end %>
 	</div>
 
 	<p>Written by <%= @note.user.name %> <%= time_ago_in_words(@note.updated_at) %> ago</p>

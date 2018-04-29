@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :change_pass, :update, :destroy]
   before_action :authenticate, except: [:new, :create]
-  before_action :validate_user, only: [:show, :edit, :update, :destroy]
+  before_action :validate_user, only: [:show, :edit, :change_pass, :update, :destroy]
+  before_action :admin!, only: [:index]
 
   # GET /users
   # GET /users.json
@@ -21,6 +22,9 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+  end
+
+  def change_pass
   end
 
   # POST /users
@@ -83,8 +87,14 @@ class UsersController < ApplicationController
     end
 
     def validate_user
-      unless @user.id == session[:user]
-        redirect_to users_path, alert: "No puedes realizar esta acción"
+      unless @user.id == session[:user] || authenticate_admin!
+        redirect_to welcome_path, alert: "No puedes realizar esta acción"
+      end
+    end
+
+    def admin!
+      unless authenticate_admin!
+        redirect_to welcome_path, alert: "Acces denied"
       end
     end
 end

@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+
 	has_many :collections
 	has_many :notes
 	
@@ -7,7 +8,7 @@ class User < ApplicationRecord
 	
 	has_many :followees, through: :relationships, source: :followed
 	has_many :followers, through: :passive_relationships, source: :follower
-	
+
 	validates :name, uniqueness: true, presence: true
 	validates :email, uniqueness: true, presence: true
 	validates :password, presence: true
@@ -22,5 +23,12 @@ class User < ApplicationRecord
 
 	def following?(other_user)
 		following.include?(other_user)
+	end
+
+	def is_normal_user?
+		self.permission_level >=1
+	end
+	def is_admin?
+		self.permission_level >=2
 	end
 end
