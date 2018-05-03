@@ -78,13 +78,13 @@ class UsersController < ApplicationController
 
     def authenticate
       unless session[:user]
-        redirect_to login_path, alert: "Necesitas registrarte para realizar esta acción"
+        redirect_to login_path, alert: "You need to sign up to perform this action!"
       end
     end
 
     def validate_user
       unless @user.id == session[:user]
-        redirect_to users_path, alert: "No puedes realizar esta acción"
+        redirect_to users_path, alert: "You musn't do this action!"
       end
     end
 end

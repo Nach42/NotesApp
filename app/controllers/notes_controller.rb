@@ -19,7 +19,7 @@ class NotesController < ApplicationController
   #new_user_note_path
   def new
     unless @user.id == session[:user]
-      redirect_to user_notes_path, alert: "No puedes realizar esta acción"
+      redirect_to user_notes_path, alert: "You musn't do this action!"
     end
     @note = Note.new
   end
@@ -88,13 +88,13 @@ class NotesController < ApplicationController
 
   def authenticate
     unless session[:user]
-      redirect_to login_path, alert: "Necesitas registrarte para realizar esta acción"
+      redirect_to login_path, alert: "You need to sign up to perform this action!"
     end
   end
 
   def note_author
     unless @user.id == session[:user]
-      redirect_to user_notes_path(@note.user), alert: "No puedes realizar esta acción"
+      redirect_to user_notes_path(@note.user), alert: "You musn't do this action!"
     end
   end
 end

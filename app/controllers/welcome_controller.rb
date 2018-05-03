@@ -9,7 +9,7 @@ class WelcomeController < ApplicationController
   private
   	def authenticate
       unless session[:user]
-        redirect_to root_url, notice: "Regístrate para crear notas"
+        redirect_to root_url, notice: "Please, sign up or log in to create new notes"
       end
     end
 end
