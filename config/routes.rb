@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   post "login" => 'session#create'
   get "signup" => 'users#new', :as => "signup"
   get "my_friends" => 'users#my_friends', :as => "my_friends"
+  get "pending_requests" => 'users#pending_requests', :as => "pending_requests"
 
   get '/users/:user_id/collections/:id/notes/:note_id', to: 'collections#destroy_note', :as => "delete_note_collection"
 

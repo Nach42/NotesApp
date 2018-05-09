@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :set_user2, only: [:my_friends]
+  before_action :set_user2, only: [:my_friends,:pending_requests]
   before_action :authenticate, except: [:new, :create]
   before_action :validate_user, only: [:show, :edit, :update, :destroy]
 
@@ -58,6 +58,10 @@ class UsersController < ApplicationController
 
   def my_friends
     @friendships=@user.friends
+  end
+
+  def pending_requests
+    @requests=@user.pending_friends
   end
   # DELETE /users/1
   # DELETE /users/1.json
