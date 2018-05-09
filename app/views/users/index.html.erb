@@ -1,12 +1,11 @@
 <h1>Users</h1>
 
-<table>
+<table class="table table-stripped">
   <thead>
     <tr>
       <th>Name</th>
-      <th>Email</th>
-      <th>Password</th>
-      <th colspan="3"></th>
+      <th >Email</th>
+      <th colspan="3">Actions</th>
     </tr>
   </thead>
 
@@ -15,7 +14,7 @@
       <tr>
         <td><%= link_to user.name, user_notes_path(user) %></td>
         <td><%= user.email %></td>
-        <td><%= user.password %></td>
+        
         <td><%= link_to 'Show', user %></td>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
         <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
