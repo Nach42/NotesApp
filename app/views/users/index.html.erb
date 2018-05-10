@@ -15,11 +15,11 @@
         <td><%= link_to user.name, user_notes_path(user) %></td>
         <td><%= user.email %></td>
         
-        <% #if friends_with(user) %>
+        <%if friends_with(user) or session[:user]==user.id %>
           <td><%= link_to 'Show', user %></td>
-        <% #else %>
-       <td><%= link_to "Friend request", my_friends_path(:user2 => user.id),:method => :post,data: { confirm: 'Do you really want to make a friend request to this user?' } %></td>
-        <% #end %>
+        <% else %>
+          <td><%= link_to "Friend request", my_friends_path(:user2 => user.id),:method => :post,data: { confirm: 'Do you really want to make a friend request to this user?' } %></td>
+        <% end %>
         <% if user.id == session[:user] %>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
         

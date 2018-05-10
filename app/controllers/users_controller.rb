@@ -99,6 +99,7 @@ class UsersController < ApplicationController
   end
 
   def friends_with(user2)
+    set_user2
     @user.friends_with?(user2)
   end
 
