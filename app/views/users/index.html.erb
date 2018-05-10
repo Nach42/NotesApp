@@ -15,9 +15,18 @@
         <td><%= link_to user.name, user_notes_path(user) %></td>
         <td><%= user.email %></td>
         
-        <td><%= link_to 'Show', user %></td>
+        <% #if friends_with(user) %>
+          <td><%= link_to 'Show', user %></td>
+        <% #else %>
+       <td><%= link_to "Friend request", my_friends_path(:user2 => user.id),:method => :post,data: { confirm: 'Do you really want to make a friend request to this user?' } %></td>
+        <% #end %>
+        <% if user.id == session[:user] %>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
+        
+        
+        <!--AÑADIR CONDICION DE SER ADMIN PARA HACER ESTO-->
         <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

@@ -21,7 +21,6 @@
                     <li class="<%= active_class(user_path(session[:user])) %>"><%= link_to session[:user_name], user_path(session[:user]) %></li>
                      <li class="<%= active_class(pending_requests_path) %>"><%= link_to "Pending Requests", pending_requests_path %>
 
-                      <i class="fas fa-exclamation"></i></li>
                     <li><%= link_to "Logout", logout_path %></li>
                   <% else %>
                     <li><%= link_to "Sign up", signup_path %> or </li>

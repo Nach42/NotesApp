@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :set_user2, only: [:my_friends,:pending_requests]
+  before_action :set_user2, only: [:my_friends,:pending_requests,:friend_request,:accept_request,:decline_request,:remove_friend,:friends_with]
   before_action :authenticate, except: [:new, :create]
-  before_action :validate_user, only: [:show, :edit, :update, :destroy]
-
+  before_action :validate_user, only: [:edit, :update, :destroy]
+  helper_method :friends_with
   # GET /users
   # GET /users.json
   def index
@@ -55,13 +55,15 @@ class UsersController < ApplicationController
       end
     end
   end
-
+  
+  # GET my_friends
   def my_friends
     @friendships=@user.friends
   end
 
+  # GET pending_requests
   def pending_requests
-    @requests=@user.pending_friends
+    @requests=@user.requested_friends
   end
   # DELETE /users/1
   # DELETE /users/1.json
@@ -71,6 +73,33 @@ class UsersController < ApplicationController
       format.html { redirect_to (@user.id == session[:user] ? logout_path : users_path), notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  #POST my_friends
+  def friend_request
+    @user.friend_request(User.find(params[:user2]))
+    redirect_to users_path
+  end
+  #POST pending_requests
+  def accept_request
+    @user.accept_request(User.find(params[:user2]))
+    redirect_to pending_requests_path
+  end
+
+  #DELETE pending_requests
+  def decline_request
+    @user.decline_request(User.find(params[:user2]))
+    redirect_to pending_requests_path
+  end
+
+  #DELETE my_friends
+  def remove_friend
+    @user.remove_friend(User.find(params[:user2]))
+    redirect_to my_friends_path
+  end
+
+  def friends_with(user2)
+    @user.friends_with?(user2)
   end
 
   private
