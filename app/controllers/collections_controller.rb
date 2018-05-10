@@ -96,10 +96,8 @@ class CollectionsController < ApplicationController
       @note = Note.find(params[:note_id])
     end
 
-    def collection_author
-      unless @user.id == session[:user]
-        redirect_to user_collections_path(@user.id), alert: "No puedes realizar esta acción"
-      end
+    def collection_params
+      params.require(:collection).permit(:name)
     end
 
     def authenticate
@@ -108,8 +106,9 @@ class CollectionsController < ApplicationController
       end
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def collection_params
-      params.require(:collection).permit(:name)
+    def collection_author
+      unless @user.id == session[:user] || authenticate_admin!
+        redirect_to user_collections_path(@user.id), alert: "No puedes realizar esta acción"
+      end
     end
 end

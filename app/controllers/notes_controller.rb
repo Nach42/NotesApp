@@ -93,7 +93,7 @@ class NotesController < ApplicationController
   end
 
   def note_author
-    unless @user.id == session[:user]
+    unless @user.id == session[:user] || authenticate_admin!
       redirect_to user_notes_path(@note.user), alert: "No puedes realizar esta acción"
     end
   end
