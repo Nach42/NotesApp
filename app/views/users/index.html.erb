@@ -12,7 +12,7 @@
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td><%= link_to user.name, user_notes_path(user) %></td>
+        <td><%= user.name %></td>
         <td><%= user.email %></td>
         
         <%if friends_with(user) or session[:user]==user.id %>

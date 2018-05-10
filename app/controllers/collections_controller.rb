@@ -2,7 +2,7 @@ class CollectionsController < ApplicationController
   before_action :set_collection, only: [:show, :edit, :update, :destroy, :destroy_note]
   before_action :set_user
   before_action :authenticate
-  before_action :collection_author, only: [:edit, :desrtoy, :update, :create]
+  before_action :collection_author, only: [:index, :edit, :desrtoy, :update, :create]
   before_action :set_note, only: [:destroy_note]
 
   # GET /collections
@@ -108,7 +108,7 @@ class CollectionsController < ApplicationController
 
     def collection_author
       unless @user.id == session[:user] || authenticate_admin!
-        redirect_to user_collections_path(@user.id), alert: "No puedes realizar esta acción"
+        redirect_to user_path(session[:user]), alert: "No puedes realizar esta acción"
       end
     end
 end

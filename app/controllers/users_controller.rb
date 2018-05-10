@@ -134,10 +134,4 @@ class UsersController < ApplicationController
         redirect_to welcome_path, alert: "No puedes realizar esta acción"
       end
     end
-
-    def admin!
-      unless authenticate_admin!
-        redirect_to welcome_path, alert: "Acces denied"
-      end
-    end
 end
