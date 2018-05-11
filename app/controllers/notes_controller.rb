@@ -2,7 +2,7 @@ class NotesController < ApplicationController
   before_action :set_note, only: [:show, :edit, :update, :destroy]
   before_action :authenticate
   before_action :set_user
-  before_action :note_author, only: [:destroy, :update, :create, :edit]
+  before_action :note_author, only: [:index, :show, :destroy, :update, :create, :edit]
 
   #GET /users/1/notes
   #user_notes_path(user_id)
@@ -92,8 +92,10 @@ class NotesController < ApplicationController
     end
   end
 
+  # Añadir condición: Si además el usuario tiene la nota compartida.
+  # Hacer metodo para comprobar si esa nota ha sido compartida a ese usuario.
   def note_author
-    unless @user.id == session[:user]
+    unless @user.id == session[:user] || authenticate_admin!
       redirect_to user_notes_path(@note.user), alert: "You musn't do this action!"
     end
   end

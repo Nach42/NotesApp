@@ -2,7 +2,7 @@ class CollectionsController < ApplicationController
   before_action :set_collection, only: [:show, :edit, :update, :destroy, :destroy_note]
   before_action :set_user
   before_action :authenticate
-  before_action :collection_author, only: [:edit, :desrtoy, :update, :create]
+  before_action :collection_author, only: [:index, :edit, :desrtoy, :update, :create]
   before_action :set_note, only: [:destroy_note]
 
   # GET /collections
@@ -97,9 +97,13 @@ class CollectionsController < ApplicationController
     end
 
     def collection_author
-      unless @user.id == session[:user]
-        redirect_to user_collections_path(@user.id), alert: "You musn't do this action!"
+      unless @user.id == session[:user] || authenticate_admin!
+        redirect_to user_path(session[:user]), alert: "You mustn't do this action"
       end
+    end
+
+    def collection_params
+      params.require(:collection).permit(:name)
     end
 
     def authenticate
@@ -108,8 +112,4 @@ class CollectionsController < ApplicationController
       end
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def collection_params
-      params.require(:collection).permit(:name)
-    end
 end
