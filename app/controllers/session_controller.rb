@@ -1,7 +1,7 @@
 class SessionController < ApplicationController
   def new
   	if session[:user]
-  		redirect_to user_notes_path(session[:user]), :notice => "Ya has iniciado sesión"
+  		redirect_to user_notes_path(session[:user]), :notice => "You have an open session"
   	end
   end
 
