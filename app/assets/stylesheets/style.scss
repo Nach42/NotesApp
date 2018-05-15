@@ -7,6 +7,16 @@ body {
   line-height: 18px;
 }
 
+textarea{
+  max-width:100%;
+
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
 p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
@@ -24,17 +34,17 @@ pre {
   margin: 0 auto;
 }
 
-a {
-  color: #000;
-
-  &:visited {
-    color: #666;
-  }
-
-  &:hover {
-    color: #fff;
-    background-color: #000;
-  }
+.btn:link { 
+  color: #333333;
+}
+.btn:visited { 
+  color: #FFFFFF;
+}
+.btn:hover { 
+  color: #CCCCCC;
+}
+.btn:active { 
+  color: #333333;
 }
 
 th {

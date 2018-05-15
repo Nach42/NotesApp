@@ -10,12 +10,12 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
+ <div class="panel panel-default col-lg-6 col-centered">
+  <div class="panel-heading">
     <%= form.label :title %>
     <%= form.text_field :title, id: :note_title %>
   </div>
-
+  <div class="panel-content">
   <div class="field">
     <%= form.label :photo, "Image" %>
     <%= form.file_field :photo %>
@@ -25,8 +25,10 @@
     <%= form.label :body %>
     <%= form.text_area :body, id: :note_body %>
   </div>
-
-  <div class="actions">
-    <%= form.submit %>
   </div>
+  <div class="actions panel-footer">
+    <%= form.submit %>
+    <%= link_to 'Back', user_note_path(@user.id, @note) %>
+  </div>
+</div>
 <% end %>

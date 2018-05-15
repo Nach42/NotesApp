@@ -10,18 +10,19 @@
   <% end %>
   <div class="row large-padding">
     <% @notes.each do |note| %>        
-        <div><strong><%= note.title %></strong></div>
+        <div class="panel panel-default col-xs-4 text-center">
+        <div class="panel-heading"><strong><%= note.title %></strong></div>
         
-        <div><%= note.body %></div>
-        
+        <div class="panel-content"><%= note.body %></div>
+        <div class="panel-footer">
         <div>Written by <%= note.user.name %> <%= time_ago_in_words(note.updated_at) %> ago</div>
         
-        <div><%= link_to 'Show', user_note_path(note.user, note),class:"btn btn-primary" %></td>
+        <div><%= link_to 'Show', user_note_path(note.user, note),class:"btn btn-primary" %>
         <% if @user.id == session[:user] %>
-          <%= link_to 'Edit', edit_user_note_path(note.user, note),class:"btn btn-warning" %></td>
+          <%= link_to 'Edit', edit_user_note_path(note.user, note),class:"btn btn-warning" %>
           <%= link_to 'Destroy', user_note_path(note.user, note), class:"btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
         <% end %>
-        </div>
+        </div></div></div>
     <% end %>
   </div>
 </div>
