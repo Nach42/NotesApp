@@ -10,7 +10,7 @@
       </ul>
     </div>
   <% end %>
- <div class="panel panel-default col-lg-6 col-centered">
+ <div class="panel panel-default col-lg-12 col-centered">
   <div class="panel-heading">
     <%= form.label :title %>
     <%= form.text_field :title, id: :note_title %>
@@ -26,9 +26,9 @@
     <%= form.text_area :body, id: :note_body %>
   </div>
   </div>
-  <div class="actions panel-footer">
-    <%= form.submit %>
-    <%= link_to 'Back', user_note_path(@user.id, @note) %>
+  <div class="actions panel-footer text-center">
+    <%= form.submit("Create Note",class:"btn btn-success") %>
+    <%= link_to 'Back', user_notes_path, class:"btn btn-info" %>
   </div>
 </div>
 <% end %>

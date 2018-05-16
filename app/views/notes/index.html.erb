@@ -10,7 +10,7 @@
   <% end %>
   <div class="row large-padding">
     <% @notes.each do |note| %>        
-        <div class="panel panel-default col-xs-4 text-center">
+        <div class="panel panel-default col-xs-12 col-sm-6 col-lg-6 text-center">
         <div class="panel-heading"><strong><%= note.title %></strong></div>
         
         <div class="panel-content"><%= note.body %></div>
@@ -21,6 +21,7 @@
         <% if @user.id == session[:user] %>
           <%= link_to 'Edit', edit_user_note_path(note.user, note),class:"btn btn-warning" %>
           <%= link_to 'Destroy', user_note_path(note.user, note), class:"btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Share', edit_user_note_path(note.user, note),class:"btn btn-info" %>
         <% end %>
         </div></div></div>
     <% end %>

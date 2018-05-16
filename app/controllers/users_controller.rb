@@ -32,15 +32,20 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params)
-
+    @user = User.new(user_params) 
     respond_to do |format|
-      if @user.save
-        session[:user] = @user.id
-        session[:user_name] = @user.name
-        format.html { redirect_to welcome_path, notice: 'Created user successfully' }
-        format.json { render :show, status: :created, location: @user }
+      if user_params[:password]==user_params2[:password_confirmation] 
+        if @user.save
+          session[:user] = @user.id
+          session[:user_name] = @user.name
+          format.html { redirect_to welcome_path, notice: 'Created user successfully' }
+          format.json { render :show, status: :created, location: @user }
+        else
+          format.html { render :new }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
       else
+        @user.errors[:password_confirmation] << ": Passwords don't match"
         format.html { render :new }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
@@ -121,6 +126,9 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:name, :email, :password)
+    end
+    def user_params2
+      params.require(:user).permit(:password_confirmation)
     end
 
     def authenticate
