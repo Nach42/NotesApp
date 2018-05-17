@@ -139,7 +139,7 @@ class UsersController < ApplicationController
 
     def validate_user
       unless @user.id == session[:user] || authenticate_admin!
-        redirect_to welcome_path, alert: "You mustn't do this action"
+        redirect_to user_path(@user), alert: "You can not do this action"
       end
     end
 end

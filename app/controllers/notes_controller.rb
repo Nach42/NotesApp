@@ -96,7 +96,7 @@ class NotesController < ApplicationController
   # Hacer metodo para comprobar si esa nota ha sido compartida a ese usuario.
   def note_author
     unless @user.id == session[:user] || authenticate_admin!
-      redirect_to user_notes_path(@note.user), alert: "You musn't do this action!"
+      redirect_to user_path(@user), alert: "You can not do this action!"
     end
   end
 end

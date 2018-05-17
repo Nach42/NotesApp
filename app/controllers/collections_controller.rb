@@ -98,7 +98,7 @@ class CollectionsController < ApplicationController
 
   def collection_author
     unless @user.id == session[:user] || authenticate_admin!
-      redirect_to user_path(session[:user]), alert: "You mustn't do this action"
+      redirect_to user_path(@user), alert: "You can not do this action"
     end
   end
 

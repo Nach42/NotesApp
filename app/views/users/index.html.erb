@@ -11,23 +11,25 @@
 
   <tbody>
     <% @users.each do |user| %>
-      <tr>
-        <td><%= user.name %></td>
-        <td><%= user.email %></td>
-        
-        <%if friends_with(user) or session[:user]==user.id %>
-          <td><%= link_to 'Show', user %></td>
-        <% else %>
-          <td><%= link_to "Friend request", my_friends_path(:user2 => user.id),:method => :post,data: { confirm: 'Do you really want to make a friend request to this user?' } %></td>
-        <% end %>
-        <% if user.id == session[:user] %>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        
-        
-        <!--AÑADIR CONDICION DE SER ADMIN PARA HACER ESTO-->
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
-      </tr>
+      <% unless user.id == session[:user] %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          
+          <%if friends_with(user) %>
+            <td><%= link_to 'Show', user %></td>
+          <% else %>
+            <td><%= link_to "Friend request", my_friends_path(:user2 => user.id),:method => :post,data: { confirm: 'Do you really want to make a friend request to this user?' } %></td>
+          <% end %>        
+          
+          <% if authenticate_admin! %>
+            <td>
+              <%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }, style: "padding-right:10px" %>
+              <%= link_to 'Edit', edit_user_path(user) %>  
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
