@@ -1,3 +1,43 @@
-<h1>Hello, <%= session[:user_name] %></h1>
-<h3>Here "Recent notes" could be displayed</h3>
-<h3>Recent collections</h3>
+<h1 class="page-header text-center">Hello, <%= session[:user_name] %></h1>
+<h3 class="text-center">Recent notes</h3>
+<div class="row large-padding">
+    <% @notes.take(4).each do |note| %>        
+        <div class="col-xs-12 col-sm-6 col-lg-6 text-center">
+        <div class="panel panel-warning col-xs-12 col-sm-12 col-lg-12">
+        <div class="panel-heading"><strong><%= note.title %></strong></div>
+        
+        <div class="panel-content"><%= note.body %></div>
+        <div class="panel-footer">
+        <div>Written by <%= note.user.name %> <%= time_ago_in_words(note.updated_at) %> ago</div>
+        
+        <div><%= link_to 'Show', user_note_path(note.user, note),class:"btn btn-primary" %>
+        <% if @user.id == session[:user] %>
+          <%= link_to 'Edit', edit_user_note_path(note.user, note),class:"btn btn-warning" %>
+          <%= link_to 'Destroy', user_note_path(note.user, note), class:"btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Share', edit_user_note_path(note.user, note),class:"btn btn-info" %>
+        <% end %>
+        </div></div></div></div>
+    <% end %>
+  </div>
+
+ <div class="page-header"></div>
+ 
+<h3 class="text-center">Recent collections</h3>
+<div class="row large-padding">
+      <% @collections.take(4).each do |collection| %>
+          <div class="col-xs-12 col-sm-6 col-lg-6 text-center">
+            <div class="panel panel-info col-xs-12 col-sm-12 col-lg-12">
+              <div class="panel-heading"><strong><%= collection.name %></strong></div>
+              <div class="panel-footer">
+              <div>Created by <%= collection.user.name %> <%= time_ago_in_words(collection.updated_at) %> ago</div>
+              <div><%=link_to 'Show', user_collection_path(collection.user, collection),class:"btn btn-primary" %>
+              <% if collection.user.id == session[:user] %>
+                <%= link_to 'Edit', edit_user_collection_path(collection.user, collection),class:"btn btn-warning" %>
+                <%= link_to 'Destroy', user_collection_path(collection.user, collection), class:"btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
+                <%= link_to 'Share', edit_user_collection_path(collection.user, collection),class:"btn btn-info" %>
+              <% end %>
+            </div></div>
+        </div>
+         </div>
+      <% end %>
+  </div>

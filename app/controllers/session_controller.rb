@@ -14,7 +14,8 @@ class SessionController < ApplicationController
   	elsif @user.password == params[:password]
   		session[:user] = @user.id
   		session[:user_name] = @user.name
-  		redirect_to welcome_path, :notice => "Logged in!"
+      redirect_to welcome_path
+  		#redirect_to welcome_path, :notice => "Logged in!"
   	else
   		flash.now.alert = "password was invalid"
   		render :new
@@ -24,6 +25,7 @@ class SessionController < ApplicationController
   def destroy
   	session[:user] = nil
     session[:user_name] = nil
-  	redirect_to :root, :notice => "Logged out!"
+    redirect_to :root
+  	#redirect_to :root, :notice => "Logged out!"
   end
 end

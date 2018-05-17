@@ -22,13 +22,12 @@
   
   	
 	<%= render "layouts/nav" %>
-  	<div class="container ">
+  	<div class="container">
 
   		<div class="row large-padding">
 			<div class="user_nav text-center">
 				<% if session[:user] %>
-					<!--Logged in as <%= link_to session[:user_name], user_path(session[:user]) %>.
-					<%= link_to "Log out", logout_path %> -->
+				
 				<% else %>
 					<%= link_to "Sign up", signup_path %> or
 					<%= link_to "log in", login_path %>.
@@ -37,7 +36,6 @@
 			<% flash.each do |name, msg| %>
 				<%= content_tag :div, msg, :id => "flash_#{name}", class: (name == 'notice' ? "notice" : "alert") %>
 			<% end %>
-			<br><i class="fas fa-exclamation"></i>
 			
 			<%= yield %>
 		</div>

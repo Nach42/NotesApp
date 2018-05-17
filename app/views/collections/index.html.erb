@@ -1,5 +1,5 @@
 <% if @user.id == session[:user] %>
-    <div class="text-center"><h1>My Collections </h1></div>
+    <div class="text-center page-header"><h1>My Collections </h1></div>
 <% else %>
   <div class="text-center"><h1>Collections by <%= @user.name %> </h1></div>
 <% end %>
@@ -11,14 +11,20 @@
 
   <div class="row large-padding">
       <% @collections.each do |collection| %>
-          <div><strong><%= collection.name %></strong></div>
-          <div>Created by <%= collection.user.name %> <%= time_ago_in_words(collection.updated_at) %> ago</div>
-          <div><%= link_to 'Show', user_collection_path(collection.user, collection) %>
-          <% if collection.user.id == session[:user] %>
-            <%= link_to 'Edit', edit_user_collection_path(collection.user, collection) %>
-            <%= link_to 'Destroy', user_collection_path(collection.user, collection), method: :delete, data: { confirm: 'Are you sure?' } %>
-          <% end %>
-          </div>
+          <div class="col-xs-12 col-sm-6 col-lg-6 text-center">
+            <div class="panel panel-info col-xs-12 col-sm-12 col-lg-12">
+              <div class="panel-heading"><strong><%= collection.name %></strong></div>
+              <div class="panel-footer">
+              <div>Created by <%= collection.user.name %> <%= time_ago_in_words(collection.updated_at) %> ago</div>
+              <div><%=link_to 'Show', user_collection_path(collection.user, collection),class:"btn btn-primary" %>
+              <% if collection.user.id == session[:user] %>
+                <%= link_to 'Edit', edit_user_collection_path(collection.user, collection),class:"btn btn-warning" %>
+                <%= link_to 'Destroy', user_collection_path(collection.user, collection), class:"btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
+                <%= link_to 'Share', edit_user_collection_path(collection.user, collection),class:"btn btn-info" %>
+              <% end %>
+            </div></div>
+        </div>
+         </div>
       <% end %>
-  </div>
+ 
 </div>

@@ -1,27 +1,37 @@
-<div class="text-center">
+<div class="text-center page-header">
 	<h1>
 	  <%= @collection.name %>
 	</h1>
 </div>
-</br>
 <div class="row large-padding">
-	<div>
-		<h3>Notes:</h3>
-		<ul class="collection-notes no-list">
-		<% @collection.notes.each do |note| %>
-			<li><%= link_to note.title, user_note_path(note.user, note) %> - 
-				<% if @user.id == session[:user]%>
-					<%= link_to "Quit", delete_note_collection_path(@user, @collection, note.id) %>
+		
+		<div class="col-lg-6">
+			<h3>Notes:</h3>
+			<table class="table table-bordered">
+				<% @collection.notes.each do |note| %>
+					<tr>
+						<td>
+							<strong><%= link_to note.title, user_note_path(note.user, note) %></strong>
+						</td>
+						<td>
+							<% if @user.id == session[:user]%>
+								<%= link_to "Quit", delete_note_collection_path(@user, @collection, note.id),class:"btn btn-danger" %>
+							<% end %>	
+						</td>
+					</tr>
 				<% end %>
-			</li>
-		<% end %>
-		</ul>
-		<p>Created by <%= @collection.user.name %> <%= time_ago_in_words(@collection.updated_at) %> ago</p>
-	</div>
+			</table>
+		</div>
 
-	<%= link_to 'Back', user_collections_path %>
-	<% if @user.id == session[:user] %>
-		<%= link_to 'Edit', edit_user_collection_path(@collection.user, @collection) %>
-		<%= link_to 'Destroy', user_collection_path(@collection.user, @collection), method: :delete, data: { confirm: 'Are you sure?' } %>
-	<% end %>
+
+
+	<div class="col-lg-6">
+		<h3>Info-Actions:</h3>
+		<p>Created by <%= @collection.user.name %> <%= time_ago_in_words(@collection.updated_at) %> ago</p>
+		<%= link_to 'Back', user_collections_path,class:"btn btn-info" %>
+		<% if @user.id == session[:user] %>
+			<%= link_to 'Edit', edit_user_collection_path(@collection.user, @collection),class:"btn btn-warning" %>
+			<%= link_to 'Destroy', user_collection_path(@collection.user, @collection),class:"btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
+		<% end %>
+	</div>
 </div>

@@ -19,7 +19,7 @@ class CollectionsController < ApplicationController
   # GET /collections/new
   def new
     unless @user.id == session[:user]
-      redirect_to user_collections_path, alert: "NYou musn't do this action!"
+      redirect_to user_collections_path, alert: "You musn't do this action!"
     end
     @notes = Note.where user: @user
     @collection = Collection.new
@@ -75,7 +75,7 @@ class CollectionsController < ApplicationController
 
   def destroy_note
     HasCollection.where(note_id: @note.id, collection_id: @collection.id).destroy_all
-    
+
     respond_to do |format|
       format.html { redirect_to user_collection_path(@user, @collection), notice: 'Collection was successfully destroyed.' }
       format.json { head :no_content }
@@ -83,33 +83,33 @@ class CollectionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_collection
-      @collection = Collection.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_collection
+    @collection = Collection.find(params[:id])
+  end
 
-    def set_user
-      @user = User.find(params[:user_id])
-    end
+  def set_user
+    @user = User.find(params[:user_id])
+  end
 
-    def set_note
-      @note = Note.find(params[:note_id])
-    end
+  def set_note
+    @note = Note.find(params[:note_id])
+  end
 
-    def collection_author
-      unless @user.id == session[:user] || authenticate_admin!
-        redirect_to user_path(session[:user]), alert: "You mustn't do this action"
-      end
+  def collection_author
+    unless @user.id == session[:user] || authenticate_admin!
+      redirect_to user_path(session[:user]), alert: "You mustn't do this action"
     end
+  end
 
-    def collection_params
-      params.require(:collection).permit(:name)
-    end
+  def collection_params
+    params.require(:collection).permit(:name)
+  end
 
-    def authenticate
-      unless session[:user]
-        redirect_to login_path, alert: "You need to sign up to perform this action!"
-      end
+  def authenticate
+    unless session[:user]
+      redirect_to login_path, alert: "You need to sign up to perform this action!"
     end
+  end
 
 end
