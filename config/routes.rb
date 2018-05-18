@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   
 
   get '/users/:user_id/collections/:id/notes/:note_id', to: 'collections#destroy_note', :as => "delete_note_collection"
+  get '/users/:user_id/shared_notes/:id', to: 'notes#delete_shared_note', as: "delete_shared_note"
 
   get '/users/:user_id/change_pass', to: 'users#change_pass', :as => "change_pass"
 

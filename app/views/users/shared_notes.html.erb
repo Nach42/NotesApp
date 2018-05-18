@@ -1,7 +1,26 @@
+
+<div class="page-header">
+  <div class="text-center"><h1>Shared Notes</h1></div>
+</div>
+
 <div>
-	<ul>
-		<% @shared_notes.each do |shared_note| %>
-			<li><%= shared_note.note.title %></li>
-		<% end %>
-	</ul>
+  <div class="row large-padding">
+    <% @shared_notes.each do |shared_note| %>
+    	<% note = shared_note.note %>        
+        <div class="col-xs-12 col-sm-6 col-lg-6 text-center">
+        <div class="panel panel-warning col-xs-12 col-sm-12 col-lg-12">
+        <div class="panel-heading"><strong><%= note.title %></strong></div>
+        
+        <div class="panel-content" style="padding: 10px"><%= note.body %></div>
+        <div class="panel-footer">
+        <div>Note shared by <%= note.user.name %> <%= time_ago_in_words(shared_note.updated_at) %> ago</div>
+        
+        <div>
+        <%= link_to 'Show', user_note_path(note.user, note),class:"btn btn-primary" %>
+        <% if @user.id == session[:user] %>
+          <%= link_to 'Delete', delete_shared_note_path(note.user, note), class:"btn btn-danger" %>
+        <% end %>
+        </div></div> </div></div>
+    <% end %>
+  </div>
 </div>

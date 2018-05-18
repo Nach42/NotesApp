@@ -1,8 +1,9 @@
 class NotesController < ApplicationController
-  before_action :set_note, only: [:show, :edit, :update, :destroy, :share]
+  before_action :set_note, only: [:show, :edit, :update, :destroy, :delete_shared_note]
   before_action :authenticate
   before_action :set_user
-  before_action :note_author, only: [:index, :show, :destroy, :update, :create, :edit]
+  before_action :note_author, only: [:index, :destroy, :update, :create, :edit]
+  before_action :shared?, only: [:show]
 
   #GET /users/1/notes
   #user_notes_path(user_id)
@@ -70,6 +71,14 @@ class NotesController < ApplicationController
     end
   end
 
+  def delete_shared_note
+    SharedNote.where(user_id: session[:user], note_id: @note).destroy_all
+    respond_to do |format|
+      format.html { redirect_to shared_notes_path(@user), notice: 'Collection was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -96,6 +105,19 @@ class NotesController < ApplicationController
   # Hacer metodo para comprobar si esa nota ha sido compartida a ese usuario.
   def note_author
     unless @user.id == session[:user] || authenticate_admin!
+      redirect_to user_path(@user), alert: "You can not do this action!"
+    end
+  end
+
+  def shared?
+    flag = false
+    shared_notes = SharedNote.where note_id: @note
+    shared_notes.each do |sn|
+      if session[:user] == sn.user_id
+        flag = true
+      end
+    end
+    unless flag
       redirect_to user_path(@user), alert: "You can not do this action!"
     end
   end
