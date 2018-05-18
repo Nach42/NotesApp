@@ -15,5 +15,6 @@
 	<%= link_to 'Back', welcome_path %>
 	<% if session[:user]== @user.id %>
 	<%= link_to 'Edit', edit_user_path(@user) %>
+	<%= link_to 'Destroy', user_path(@user), method: :delete, data: { confirm: 'Are you sure?' } %>
 	<%end%>
 </div>
