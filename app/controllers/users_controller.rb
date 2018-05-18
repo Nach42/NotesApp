@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
-  before_action :set_user, only: [:show, :edit, :change_pass, :update, :destroy]
-  before_action :set_user2, only: [:my_friends,:pending_requests,:friend_request,:accept_request,:decline_request,:remove_friend,:friends_with]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user2, only: [:change_pass,:my_friends,:pending_requests,:friend_request,:accept_request,:decline_request,:remove_friend,:friends_with]
   before_action :authenticate, except: [:new, :create]
   before_action :validate_user, only: [:edit, :change_pass, :update, :destroy]
   helper_method :friends_with
@@ -27,6 +27,7 @@ class UsersController < ApplicationController
   end
 
   def change_pass
+
   end
 
   # POST /users
