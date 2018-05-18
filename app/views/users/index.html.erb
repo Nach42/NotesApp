@@ -1,4 +1,4 @@
-<h1>Users</h1>
+<h1 class="text-center page-header">All Users</h1>
 
 <table class="table table-stripped">
   <thead>
@@ -22,10 +22,11 @@
         <% end %>
         <% if user.id == session[:user] %>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        
-        
         <!--AÑADIR CONDICION DE SER ADMIN PARA HACER ESTO-->
         <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% else %>
+        <td></td>
+        <td></td>
         <% end %>
       </tr>
     <% end %>

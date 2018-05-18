@@ -8,6 +8,9 @@
 		<div class="col-lg-6">
 			<h3>Notes:</h3>
 			<table class="table table-bordered">
+				<%if @collection.notes.each.size ==0%>
+					<div>There isn't notes in this collection. Click on "EDIT" to add some</div>
+				<%else%>
 				<% @collection.notes.each do |note| %>
 					<tr>
 						<td>
@@ -20,6 +23,7 @@
 						</td>
 					</tr>
 				<% end %>
+				<%end%>
 			</table>
 		</div>
 
