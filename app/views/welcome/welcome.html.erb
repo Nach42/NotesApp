@@ -14,7 +14,6 @@
         <% if @user.id == session[:user] %>
           <%= link_to 'Edit', edit_user_note_path(note.user, note),class:"btn btn-warning" %>
           <%= link_to 'Destroy', user_note_path(note.user, note), class:"btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
-          <%= link_to 'Share', edit_user_note_path(note.user, note),class:"btn btn-info" %>
         <% end %>
         </div></div></div></div>
     <% end %>
@@ -34,7 +33,6 @@
               <% if collection.user.id == session[:user] %>
                 <%= link_to 'Edit', edit_user_collection_path(collection.user, collection),class:"btn btn-warning" %>
                 <%= link_to 'Destroy', user_collection_path(collection.user, collection), class:"btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
-                <%= link_to 'Share', edit_user_collection_path(collection.user, collection),class:"btn btn-info" %>
               <% end %>
             </div></div>
         </div>

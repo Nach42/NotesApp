@@ -1,5 +1,5 @@
 class NotesController < ApplicationController
-  before_action :set_note, only: [:show, :edit, :update, :destroy]
+  before_action :set_note, only: [:show, :edit, :update, :destroy, :share]
   before_action :authenticate
   before_action :set_user
   before_action :note_author, only: [:index, :show, :destroy, :update, :create, :edit]
@@ -19,7 +19,7 @@ class NotesController < ApplicationController
   #new_user_note_path
   def new
     unless @user.id == session[:user]
-      redirect_to user_notes_path, alert: "You musn't do this action!"
+      redirect_to user_notes_path, alert: "You can not do this action!"
     end
     @note = Note.new
   end

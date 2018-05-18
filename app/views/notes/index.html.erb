@@ -7,6 +7,7 @@
 <div>
   <% if @user.id == session[:user] %>
     <div class="text-center"><%= link_to "New Note", new_user_note_path,class:"btn btn-success" %></div>
+    <div class="text-center"><%= link_to "Shared Notes", shared_notes_path(@user),class:"btn btn-primary" %></div>
   <% end %>
   <div class="row large-padding">
     <% @notes.each do |note| %>        
@@ -23,7 +24,6 @@
         <% if @user.id == session[:user] %>
           <%= link_to 'Edit', edit_user_note_path(note.user, note),class:"btn btn-warning" %>
           <%= link_to 'Destroy', user_note_path(note.user, note), class:"btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
-          <%= link_to 'Share', edit_user_note_path(note.user, note),class:"btn btn-info" %>
         <% end %>
         </div></div> </div></div>
     <% end %>

@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 
   get '/users/:user_id/change_pass', to: 'users#change_pass', :as => "change_pass"
 
+  get '/users/:id/shared_notes', to: 'users#shared_notes', :as => "shared_notes"
+
   get "welcome" => 'welcome#welcome', as: "welcome"
   resources :users do
     resources :notes

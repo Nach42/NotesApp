@@ -1,0 +1,7 @@
+<div>
+	<ul>
+		<% @shared_notes.each do |shared_note| %>
+			<li><%= shared_note.note.title %></li>
+		<% end %>
+	</ul>
+</div>
