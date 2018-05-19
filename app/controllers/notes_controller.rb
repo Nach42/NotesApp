@@ -1,5 +1,5 @@
 class NotesController < ApplicationController
-  before_action :set_note, only: [:show, :edit, :update, :destroy, :delete_shared_note]
+  before_action :set_note, only: [:show, :edit, :update, :destroy, :create_shared_note, :share_note, :delete_shared_note]
   before_action :authenticate
   before_action :set_user
   before_action :note_author, only: [:index, :destroy, :update, :create, :edit]
@@ -71,10 +71,22 @@ class NotesController < ApplicationController
     end
   end
 
+  def share_note
+    @friends = @user.friends
+  end
+
+  def create_shared_note
+    @note.shared_users = params[:users]
+    respond_to do |format|
+      format.html { redirect_to user_note_path(@user, @note), notice: 'Note successfully shared.' }
+      format.json { render :show, status: :created, location: @note }
+    end
+  end
+
   def delete_shared_note
     SharedNote.where(user_id: session[:user], note_id: @note).destroy_all
     respond_to do |format|
-      format.html { redirect_to shared_notes_path(@user), notice: 'Collection was successfully destroyed.' }
+      format.html { redirect_to shared_notes_path(session[:user]), notice: 'Note was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -111,6 +123,11 @@ class NotesController < ApplicationController
 
   def shared?
     flag = false
+
+    if @user.id == session[:user] || authenticate_admin!
+      flag = true
+    end
+
     shared_notes = SharedNote.where note_id: @note
     shared_notes.each do |sn|
       if session[:user] == sn.user_id

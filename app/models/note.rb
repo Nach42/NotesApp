@@ -12,4 +12,13 @@ class Note < ApplicationRecord
   has_attached_file :photo#, styles: {ancho: "500x300", largo: "300x500"}
   validates_attachment_content_type :photo, content_type: /\Aimage\/.*\Z/
 
+  def shared_users=(value)
+  	@shared_users = value
+  	if @shared_users
+  		@shared_users.each do |su|
+  			SharedNote.create(user_id: su, note_id: self.id)
+  		end
+  	end
+  end
+
 end
