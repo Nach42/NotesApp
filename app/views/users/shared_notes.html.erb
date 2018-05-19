@@ -14,7 +14,7 @@
           
           <div class="panel-content" style="padding: 10px"><%= note.body %></div>
           <div class="panel-footer">
-          <div>Note shared by <%= note.user.name %> <%= time_ago_in_words(shared_note.updated_at) %> ago</div>
+          <div>Note shared by <%= link_to note.user.name, user_path(note.user) %> <%= time_ago_in_words(shared_note.updated_at) %> ago</div>
           
           <div>
           <%= link_to 'Show', user_note_path(note.user, note),class:"btn btn-primary" %>

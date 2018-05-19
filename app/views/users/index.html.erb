@@ -19,7 +19,7 @@
           <%if friends_with(user) %>
             <td><%= link_to 'Show', user %></td>
           <% else %>
-            <td><%= link_to "Friend request", my_friends_path(:user2 => user.id),:method => :post,data: { confirm: 'Do you really want to make a friend request to this user?' } %></td>
+              <td><%= link_to "Friend request", my_friends_path(:user2 => user.id),:method => :post,data: { confirm: 'Do you really want to make a friend request to this user?' } %></td>
           <% end %>        
           
           <% if authenticate_admin! %>
