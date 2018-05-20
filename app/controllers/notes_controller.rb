@@ -1,8 +1,9 @@
 class NotesController < ApplicationController
-  before_action :set_note, only: [:show, :edit, :update, :destroy]
+  before_action :set_note, only: [:show, :edit, :update, :destroy, :create_shared_note, :share_note, :delete_shared_note]
   before_action :authenticate
   before_action :set_user
-  before_action :note_author, only: [:index, :show, :destroy, :update, :create, :edit]
+  before_action :note_author, only: [:index, :destroy, :update, :create, :edit]
+  before_action :shared?, only: [:show]
 
   #GET /users/1/notes
   #user_notes_path(user_id)
@@ -19,7 +20,7 @@ class NotesController < ApplicationController
   #new_user_note_path
   def new
     unless @user.id == session[:user]
-      redirect_to user_notes_path, alert: "You musn't do this action!"
+      redirect_to user_notes_path, alert: "You can not do this action!"
     end
     @note = Note.new
   end
@@ -70,6 +71,26 @@ class NotesController < ApplicationController
     end
   end
 
+  def share_note
+    @friends = @user.friends
+  end
+
+  def create_shared_note
+    @note.shared_users = params[:users]
+    respond_to do |format|
+      format.html { redirect_to user_note_path(@user, @note), notice: 'Note successfully shared.' }
+      format.json { render :show, status: :created, location: @note }
+    end
+  end
+
+  def delete_shared_note
+    SharedNote.where(user_id: session[:user], note_id: @note).destroy_all
+    respond_to do |format|
+      format.html { redirect_to shared_notes_path(session[:user]), notice: 'Note was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -96,7 +117,25 @@ class NotesController < ApplicationController
   # Hacer metodo para comprobar si esa nota ha sido compartida a ese usuario.
   def note_author
     unless @user.id == session[:user] || authenticate_admin!
-      redirect_to user_notes_path(@note.user), alert: "You musn't do this action!"
+      redirect_to user_path(@user), alert: "You can not do this action!"
+    end
+  end
+
+  def shared?
+    flag = false
+
+    if @user.id == session[:user] || authenticate_admin!
+      flag = true
+    end
+
+    shared_notes = SharedNote.where note_id: @note
+    shared_notes.each do |sn|
+      if session[:user] == sn.user_id
+        flag = true
+      end
+    end
+    unless flag
+      redirect_to user_path(@user), alert: "You can not do this action!"
     end
   end
 end

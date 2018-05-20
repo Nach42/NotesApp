@@ -15,8 +15,24 @@ Rails.application.routes.draw do
   
 
   get '/users/:user_id/collections/:id/notes/:note_id', to: 'collections#destroy_note', :as => "delete_note_collection"
-
+  
   get '/users/:user_id/change_pass', to: 'users#change_pass', :as => "change_pass"
+
+  # Compartir nota
+  get '/users/:user_id/notes/:id/share_note', to: 'notes#share_note', as: "share_note"
+  patch '/users/:user_id/notes/:id/share_note', to: 'notes#create_shared_note'
+  # Mostrar notas compartidas
+  get '/users/:id/shared_notes', to: 'users#shared_notes', :as => "shared_notes"
+  # Borrar nota compartida
+  get '/users/:user_id/shared_notes/:id', to: 'notes#delete_shared_note', as: "delete_shared_note"
+
+  # Compartir coleccion
+  get '/users/:user_id/collections/:id/share_collection', to: 'collections#share_collection', as: "share_collection"
+  patch '/users/:user_id/collections/:id/share_collection', to: 'collections#create_shared_collection'
+  # Mostrar notas compartidas
+  get '/users/:id/shared_collections', to: 'users#shared_collections', :as => "shared_collections"
+  # Borrar nota compartida
+  get '/users/:user_id/shared_collections/:id', to: 'collections#delete_shared_collection', as: "delete_shared_collection"
 
   get "welcome" => 'welcome#welcome', as: "welcome"
   resources :users do

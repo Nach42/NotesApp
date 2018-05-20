@@ -20,8 +20,10 @@
 	<p>Written by <%= @note.user.name %> <%= time_ago_in_words(@note.updated_at) %> ago</p>
 
 	<% if @user.id == session[:user] %>
+		<%= link_to 'Share', share_note_path(@note.user, @note), class:"btn btn-primary" %>
 		<%= link_to 'Edit', edit_user_note_path(@note.user, @note),class:"btn btn-warning" %>
-          <%= link_to 'Destroy', user_note_path(@note.user, @note), class:"btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
-          <%= link_to 'Back', user_notes_path,class:"btn btn-info" %>
+		  <%= link_to 'Destroy', user_note_path(@note.user, @note), class:"btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
+		  <%= link_to 'Back', user_notes_path,class:"btn btn-info" %>
 	<% end %>
 </div></div></div>
+<div id="modal-holder"></div>

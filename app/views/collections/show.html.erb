@@ -29,13 +29,15 @@
 
 
 
-	<div class="col-lg-6">
+	<div class="col-lg-6" style="padding-left: 50px">
 		<h3>Info-Actions:</h3>
 		<p>Created by <%= @collection.user.name %> <%= time_ago_in_words(@collection.updated_at) %> ago</p>
-		<%= link_to 'Back', user_collections_path,class:"btn btn-info" %>
 		<% if @user.id == session[:user] %>
+			<%= link_to 'Share', share_collection_path(@collection.user, @collection), class:"btn btn-primary" %>
 			<%= link_to 'Edit', edit_user_collection_path(@collection.user, @collection),class:"btn btn-warning" %>
 			<%= link_to 'Destroy', user_collection_path(@collection.user, @collection),class:"btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
+			<%= link_to 'Back', user_collections_path,class:"btn btn-info" %>
 		<% end %>
+		
 	</div>
 </div>

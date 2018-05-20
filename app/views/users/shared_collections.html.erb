@@ -1,0 +1,30 @@
+
+<div class="page-header">
+  <div class="text-center"><h1>Shared Collections</h1></div>
+</div>
+
+<% if @shared_collections.size > 0 %>
+  <div>
+    <div class="row large-padding">
+      <% @shared_collections.each do |shared_collection| %>
+      	<% collection = shared_collection.collection %>        
+          <div class="col-xs-12 col-sm-6 col-lg-6 text-center">
+            <div class="panel panel-info col-xs-12 col-sm-12 col-lg-12">
+              <div class="panel-heading"><strong><%= collection.name %></strong></div>
+              <div class="panel-footer">
+              <div>Shared by <%= link_to collection.user.name, user_path(collection.user) %> <%= time_ago_in_words(collection.updated_at) %> ago</div>
+              <div><%=link_to 'Show', user_collection_path(collection.user, collection),class:"btn btn-primary" %>
+              <% if @user.id == session[:user] %>
+                <%= link_to 'Delete', delete_shared_collection_path(@user, collection), class:"btn btn-danger" %>
+              <% end %>
+              </div></div>
+            </div>
+          </div>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <div class="row col-lg-12">
+    <p class="lead">You don't have any note shared yet.</p>
+  </div>
+<% end %>

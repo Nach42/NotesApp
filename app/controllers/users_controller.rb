@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :set_user2, only: [:change_pass,:my_friends,:pending_requests,:friend_request,:accept_request,:decline_request,:remove_friend,:friends_with]
+  before_action :set_user, only: [:show, :edit, :change_pass, :update, :destroy, :shared_notes, :shared_collections]
+  before_action :set_user2, only: [:my_friends,:pending_requests,:friend_request,:accept_request,:decline_request,:remove_friend,:friends_with]
   before_action :authenticate, except: [:new, :create]
   before_action :validate_user, only: [:edit, :change_pass, :update, :destroy]
   helper_method :friends_with
@@ -67,6 +67,15 @@ class UsersController < ApplicationController
     end
   end
   
+  #GET shared_notes
+  def shared_notes
+    @shared_notes = SharedNote.where user_id: @user
+  end
+
+  def shared_collections
+    @shared_collections = SharedCollection.where user_id: @user
+  end
+
   # GET my_friends
   def my_friends
     @friendships=@user.friends
@@ -140,7 +149,7 @@ class UsersController < ApplicationController
 
     def validate_user
       unless @user.id == session[:user] || authenticate_admin!
-        redirect_to welcome_path, alert: "You mustn't do this action"
+        redirect_to user_path(@user), alert: "You can not do this action"
       end
     end
 end

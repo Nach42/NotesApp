@@ -1,5 +1,5 @@
 class CollectionsController < ApplicationController
-  before_action :set_collection, only: [:show, :edit, :update, :destroy, :destroy_note]
+  before_action :set_collection, only: [:show, :edit, :update, :destroy, :destroy_note, :share_collection, :create_shared_collection, :delete_shared_collection]
   before_action :set_user
   before_action :authenticate
   before_action :collection_author, only: [:index, :edit, :desrtoy, :update, :create]
@@ -82,6 +82,27 @@ class CollectionsController < ApplicationController
     end
   end
 
+  def share_collection
+    @friends = @user.friends
+  end
+
+  def create_shared_collection
+    @collection.shared_users = params[:users]
+    respond_to do |format|
+      format.html { redirect_to user_collection_path(@user, @collection), notice: 'Collection successfully shared.' }
+      format.json { render :show, status: :created, location: @collection }
+    end
+  end
+
+  # Falta coger todas las notas de esta coleccion y borrar los SharedNote's con ese user y esas notas
+  def delete_shared_collection
+    SharedCollection.where(user_id: session[:user], collection_id: @collection).destroy_all
+    respond_to do |format|
+      format.html { redirect_to shared_collections_path(session[:user]), notice: 'Collection was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_collection
@@ -98,7 +119,7 @@ class CollectionsController < ApplicationController
 
   def collection_author
     unless @user.id == session[:user] || authenticate_admin!
-      redirect_to user_path(session[:user]), alert: "You mustn't do this action"
+      redirect_to user_path(@user), alert: "You can not do this action"
     end
   end
 

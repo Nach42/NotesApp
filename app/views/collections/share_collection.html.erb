@@ -1,0 +1,35 @@
+<h1 class="text-center">Share Note with</h1>
+<div class="row large-padding">
+
+<% if @friends.size > 0 %>
+	<%= form_for([@user, @collection], url: {action: "share_collection"}) do |form| %>
+	  <% if @collection.errors.any? %>
+	    <div id="error_explanation">
+	      <h2><%= pluralize(@collection.errors.count, "error") %> prohibited this collection from being saved:</h2>
+
+	      <ul>
+	      <% @collection.errors.full_messages.each do |message| %>
+	        <li><%= message %></li>
+	      <% end %>
+	      </ul>
+	    </div>
+	  <% end %>
+
+	  <div class="field">
+	    <label>Friends:</label>
+	    <div class="field collection-notes">
+	      <% @friends.each do |f| %>
+	        <p><%= check_box_tag "users[]", f.id %> <%= f.name %></p>
+	      <% end %>
+	    </div>
+	  </div>
+	  
+	  <div class="actions">
+	    <%= form.submit "Compartir" %>
+	  </div>
+	<% end %>
+	<%= link_to 'Back', user_collection_path(@user, @collection) %>
+</div>
+<% else %>
+	<p>You have no friends to share</p>
+<% end %>
