@@ -4,7 +4,10 @@ class User < ApplicationRecord
 	has_many :collections
 	has_many :notes
 	has_many :shared_notes, dependent: :delete_all
-  	has_many :notes, through: :has_collections
+  	has_many :notes, through: :shared_notes
+
+  	has_many :shared_collections, dependent: :delete_all
+  	has_many :collections, through: :shared_collections
 
 	validates :name, uniqueness: true, presence: true
 	validates :email, uniqueness: true, presence: true

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_action :set_user, only: [:show, :edit, :change_pass, :update, :destroy, :shared_notes]
+  before_action :set_user, only: [:show, :edit, :change_pass, :update, :destroy, :shared_notes, :shared_collections]
   before_action :set_user2, only: [:my_friends,:pending_requests,:friend_request,:accept_request,:decline_request,:remove_friend,:friends_with]
   before_action :authenticate, except: [:new, :create]
   before_action :validate_user, only: [:edit, :change_pass, :update, :destroy]
@@ -69,6 +69,10 @@ class UsersController < ApplicationController
   #GET shared_notes
   def shared_notes
     @shared_notes = SharedNote.where user_id: @user
+  end
+
+  def shared_collections
+    @shared_collections = SharedCollection.where user_id: @user
   end
 
   # GET my_friends

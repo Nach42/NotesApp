@@ -19,7 +19,7 @@
           <div>
           <%= link_to 'Show', user_note_path(note.user, note),class:"btn btn-primary" %>
           <% if @user.id == session[:user] %>
-            <%= link_to 'Delete', delete_shared_note_path(note.user, note), class:"btn btn-danger" %>
+            <%= link_to 'Delete', delete_shared_note_path(@user, note), class:"btn btn-danger" %>
           <% end %>
           </div></div> </div></div>
       <% end %>

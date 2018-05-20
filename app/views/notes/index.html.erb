@@ -4,8 +4,7 @@
 
 <div>
   <% if @user.id == session[:user] %>
-    <div class="text-center"><%= link_to "New Note", new_user_note_path,class:"btn btn-success" %></div>
-    <div class="text-center"><%= link_to "Shared Notes", shared_notes_path(@user),class:"btn btn-primary" %></div>
+    <div class="text-center"><%= link_to "New Note", new_user_note_path,class:"btn btn-success" %> <%= link_to "Shared Notes", shared_notes_path(@user),class:"btn btn-primary" %></div>
   <% end %>
   <div class="row large-padding">
     <% @notes.each do |note| %>        
