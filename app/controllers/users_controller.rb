@@ -27,6 +27,7 @@ class UsersController < ApplicationController
   end
 
   def change_pass
+
   end
 
   # POST /users

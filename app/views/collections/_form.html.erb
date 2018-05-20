@@ -10,22 +10,28 @@
       </ul>
     </div>
   <% end %>
-
+  <div class="panel panel-info col-lg-8 col-centered">
+  <div class="panel-heading">
   <div class="field">
     <%= form.label :name %>
     <%= form.text_field :name, id: :collection_name %>
   </div>
-
+  </div>
+  <div class="panel-body">
   <div class="field">
-    <label>Notes:</label>
+    <label>Available notes for this collection:</label>
     <div class="field collection-notes">
       <% @notes.each do |n| %>
         <p><%= check_box_tag "notes[]", n.id %> <%= n.title %></p>
       <% end %>
     </div>
   </div>
-  
-  <div class="actions">
-    <%= form.submit %>
   </div>
+  <div class="panel-footer">
+  <div class="actions">
+    <%= form.submit("Save",class:"btn btn-success") %>
+    <%= link_to 'Back', user_collections_path,class:"btn btn-info" %>
+  </div>
+</div>
 <% end %>
+</div>

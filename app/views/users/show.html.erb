@@ -1,7 +1,7 @@
-<div class="text-center">
-	<h1><%=@user.name%>'s profile</h1>
-</div>
+<h1 class="text-center page-header"><%=@user.name%>'s profile</h1>
 <div class="row large-padding">
+	<div class="col-lg-6 col-centered panel panel-primary">
+	<div class="panel-heading">
 	<p>
 	  <strong>Name:</strong>
 	  <%= @user.name %>
@@ -11,10 +11,11 @@
 	  <strong>Email:</strong>
 	  <%= @user.email %>
 	</p>
-
-	<%= link_to 'Back', welcome_path %>
+	</div>
+	<div class="panel-footer text-center"> <%= link_to 'Back', welcome_path,class:"btn btn-info" %>
 	<% if session[:user]== @user.id %>
 	<%= link_to 'Edit', edit_user_path(@user) %>
 	<%= link_to 'Destroy', user_path(@user), method: :delete, data: { confirm: 'Are you sure?' } %>
 	<%end%>
+</div>
 </div>
