@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_action :set_user2, only: [:my_friends,:pending_requests,:friend_request,:accept_request,:decline_request,:remove_friend,:friends_with]
   before_action :authenticate, except: [:new, :create]
   before_action :validate_user, only: [:edit, :change_pass, :update, :destroy]
+  before_action :is_super_admin, only: []
   helper_method :friends_with
 
   # GET /users
@@ -46,7 +47,7 @@ class UsersController < ApplicationController
           format.json { render json: @user.errors, status: :unprocessable_entity }
         end
       else
-        @user.errors[:password_confirmation] << ": Passwords don't match"
+        @user.errors[:password_confirmation] << ": Passwords doesn't match"
         format.html { render :new }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
@@ -148,8 +149,10 @@ class UsersController < ApplicationController
     end
 
     def validate_user
-      unless @user.id == session[:user] || authenticate_admin!
-        redirect_to user_path(@user), alert: "You can not do this action"
+      if  @user.is_super_admin?
+        redirect_to users_path, alert: "You can not do this action"
+      elsif !authenticate_admin! || !@user.id == session[:user]
+        redirect_to users_path, alert: "You can not do this action"
       end
     end
 end

@@ -22,7 +22,7 @@
               <td><%= link_to "Friend request", my_friends_path(:user2 => user.id),:method => :post,data: { confirm: 'Do you really want to make a friend request to this user?' } %></td>
           <% end %>        
           
-          <% if authenticate_admin! %>
+          <% if authenticate_admin! && !user.is_super_admin? %>
             <td>
               <%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }, style: "padding-right:10px" %>
               <%= link_to 'Edit', edit_user_path(user) %>  
