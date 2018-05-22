@@ -38,4 +38,12 @@ class Collection < ApplicationRecord
   	  end
     end
   end
+
+  # Borrar coleccion compartida y notas asociadas
+  def destroy_share_collection(user)
+    SharedCollection.where(user_id: user, collection_id: self.id).destroy_all
+    self.notes.each do |n|
+      SharedNote.where(user_id: user, note_id: n.id).destroy_all
+    end
+  end
 end

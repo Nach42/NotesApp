@@ -16,9 +16,12 @@
 						<td>
 							<strong><%= link_to note.title, user_note_path(note.user, note) %></strong>
 						</td>
-						<td>
+						<td class="text-center">
 							<% if @user.id == session[:user]%>
+								<%= link_to "View Note", user_note_path(note.user, note), class:"btn btn-primary", style:"margin-right:10px;" %>
 								<%= link_to "Quit", delete_note_collection_path(@user, @collection, note.id),class:"btn btn-danger" %>
+							<% else %>
+								<%= link_to "View Note", user_note_path(note.user, note), class:"btn btn-primary" %>
 							<% end %>	
 						</td>
 					</tr>

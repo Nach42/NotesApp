@@ -96,7 +96,8 @@ class CollectionsController < ApplicationController
 
   # Falta coger todas las notas de esta coleccion y borrar los SharedNote's con ese user y esas notas
   def delete_shared_collection
-    SharedCollection.where(user_id: session[:user], collection_id: @collection).destroy_all
+    #SharedCollection.where(user_id: session[:user], collection_id: @collection).destroy_all
+    @collection.destroy_share_collection(session[:user])
     respond_to do |format|
       format.html { redirect_to shared_collections_path(session[:user]), notice: 'Collection was successfully destroyed.' }
       format.json { head :no_content }
