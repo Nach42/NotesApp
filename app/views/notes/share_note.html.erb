@@ -1,4 +1,4 @@
-<h1 class="text-center">Share Note with</h1>
+<h1 class="text-center page-header">Sharing Note</h1>
 <div class="row large-padding">
 
 <% if @friends.size > 0 %>
@@ -14,22 +14,24 @@
 	      </ul>
 	    </div>
 	  <% end %>
-
+<div class="panel panel-warning col-lg-8 col-centered">
+  <div class="panel-heading">
 	  <div class="field">
-	    <label>Friends:</label>
+	    <label>Available Friends:</label>
 	    <div class="field collection-notes">
 	      <% @friends.each do |f| %>
 	        <p><%= check_box_tag "users[]", f.id %> <%= f.name %></p>
 	      <% end %>
 	    </div>
 	  </div>
-	  
+	  <div class="panel-footer">
 	  <div class="actions">
-	    <%= form.submit "Compartir" %>
+	    <%= form.submit("Share",class:"btn btn-success") %>    <%= link_to 'Back', user_collections_path,class:"btn btn-info" %>
 	  </div>
 	<% end %>
-	<%= link_to 'Back', user_note_path(@user, @note) %>
-</div>
+	
+
+</div></div></div>
 <% else %>
 	<p>You have no friends to share</p>
-<% end %>
+<% end %></div>

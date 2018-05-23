@@ -10,4 +10,19 @@ class ApplicationController < ActionController::Base
   		user.is_admin?
   	end
   end
+  def admin_mode_set
+  	@mode=0
+  end
+
+  def admin_mode_on
+  	@mode=1
+  end
+
+  def admin_mode_off
+  	@mode=0
+  end
+
+  def admin_mode_status
+  	@mode
+  end
 end

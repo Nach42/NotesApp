@@ -31,6 +31,7 @@
 <%= form.label :password_confirmation %>    
     <%= form.password_field :password_confirmation, id: :user_password_confirmation %></div>
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit("Sign up",class:"btn btn-success") %>     <%= link_to 'Back', welcome_path,class:"btn btn-info" %>
+
   </div>
 <% end %>
