@@ -149,10 +149,12 @@ class UsersController < ApplicationController
     end
 
     def validate_user
-      if  @user.is_super_admin?
+
+      if  @user.is_super_admin? 
         redirect_to users_path, alert: "You can not do this action"
-      elsif !authenticate_admin! || !@user.id == session[:user]
-        redirect_to users_path, alert: "You can not do this action"
+      end
+      unless @user.id == session[:user] || authenticate_admin!
+      	redirect_to users_path, alert: "You can not do this action"
       end
     end
 end
