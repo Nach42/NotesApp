@@ -47,7 +47,7 @@ class UsersController < ApplicationController
           format.json { render json: @user.errors, status: :unprocessable_entity }
         end
       else
-        @user.errors[:password_confirmation] << ": Passwords doesn't match"
+        @user.errors[:password_confirmation] << ": Passwords don't match"
         format.html { render :new }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end

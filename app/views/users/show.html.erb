@@ -14,8 +14,8 @@
 	</div>
 	<div class="panel-footer text-center"> <%= link_to 'Back', welcome_path,class:"btn btn-info" %>
 	<% if session[:user]== @user.id && !@user.is_super_admin? %>
-		<%= link_to 'Edit', edit_user_path(@user) %>
-		<%= link_to 'Destroy', user_path(@user), method: :delete, data: { confirm: 'Are you sure?' } %>
+		<%= link_to 'Edit', edit_user_path(@user),class:"btn btn-warning" %>
+		<%= link_to 'Destroy', user_path(@user), method: :delete, data: { confirm: 'Are you sure?' },class:"btn btn-danger" %>
 	<%end%>
 </div>
 </div>
