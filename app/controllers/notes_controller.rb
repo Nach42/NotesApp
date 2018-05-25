@@ -1,7 +1,7 @@
 class NotesController < ApplicationController
   before_action :set_note, only: [:show, :edit, :update, :destroy, :create_shared_note, :share_note, :delete_shared_note]
   before_action :authenticate
-  before_action :set_user
+  before_action :set_user, except: [:index2] 
   before_action :note_author, only: [:index, :destroy, :update, :create, :edit]
   before_action :shared?, only: [:show]
 
@@ -10,7 +10,10 @@ class NotesController < ApplicationController
   def index
     @notes = Note.where user: @user
   end
-
+  
+  def index2
+    @notes = Note.all
+  end
   #GET /users/1/notes/1
   #user_note_path(note.user, note)
   def show

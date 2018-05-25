@@ -7,26 +7,41 @@
         </button>  
       </div>
       <div class="collapse navbar-collapse" id="menugeneral">
-        
+         <ul class="nav navbar-nav">
         <% if session[:user] %>
-          
-          <ul class="nav navbar-nav">          
-            <li class="<%= active_class(user_notes_path(session[:user])) %>"><%= link_to "My Notes", user_notes_path(session[:user]) %></li>
-            <li class="<%= active_class(user_collections_path(session[:user])) %>"><%= link_to "My Collections", user_collections_path(session[:user]) %></li>
-            <li class="<%= active_class(my_friends_path) %>"><%= link_to "My Friends", my_friends_path %></li>
-            <li class="<%= active_class(users_path) %>"><%= link_to "All Users", users_path %></li>
-            <li class="dropdown">
-          </ul>
-          
-          <ul class="nav navbar-nav navbar-right">             
-            <li class="<%= active_class(user_path(session[:user])) %>"><%= link_to session[:user_name], user_path(session[:user]) %></li>
-            <li class="<%= active_class(pending_requests_path) %>"><%= link_to "Pending Requests", pending_requests_path %></li>
-            <li><%= link_to "Logout", logout_path %></li>
-          </ul>
+          <% 
+              @user = User.find(session[:user])
+              if @user.permission_level>=2
+          %>
+
+
+                     
+              <li class="<%= active_class(all_notes_path) %>"><%= link_to "Notes", all_notes_path %></li>
+              <li class="<%= active_class(all_collections_path) %>"><%= link_to "Collections", all_collections_path %></li>
+              <li class="<%= active_class(all_users_path) %>"><%= link_to "Users", all_users_path %></li>
+              <li class="divider-vertical"></li>
+            
+            <!--<ul class="nav navbar-nav navbar-right">             
+              <li class="<%= active_class(user_path(session[:user])) %>"><%= link_to session[:user_name], user_path(session[:user]) %></li>
+              <li><%= link_to "Logout", logout_path %></li>
+            </ul>-->
+
+          <% end %>
         
+              <li class="<%= active_class(user_notes_path(session[:user])) %>"><%= link_to "My Notes", user_notes_path(session[:user]) %></li>
+              <li class="<%= active_class(user_collections_path(session[:user])) %>"><%= link_to "My Collections", user_collections_path(session[:user]) %></li>
+              <li class="<%= active_class(my_friends_path) %>"><%= link_to "My Friends", my_friends_path %></li>
+              <li class="<%= active_class(users_path) %>"><%= link_to "All Users", users_path %></li>
+              <li class="dropdown">
+            </ul>
+            
+            <ul class="nav navbar-nav navbar-right">             
+              <li class="<%= active_class(user_path(session[:user])) %>"><%= link_to session[:user_name], user_path(session[:user]) %></li>
+              <li class="<%= active_class(pending_requests_path) %>"><%= link_to "Pending Requests", pending_requests_path %></li>
+              <li><%= link_to "Logout", logout_path %></li>
+            </ul>
         <% end %>   
         
       </div>
   </nav>
-
 </header>

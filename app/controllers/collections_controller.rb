@@ -1,6 +1,6 @@
 class CollectionsController < ApplicationController
   before_action :set_collection, only: [:show, :edit, :update, :destroy, :destroy_note, :share_collection, :create_shared_collection, :delete_shared_collection]
-  before_action :set_user
+  before_action :set_user,except: [:index2]
   before_action :authenticate
   before_action :collection_author, only: [:index, :edit, :desrtoy, :update, :create]
   before_action :set_note, only: [:destroy_note]
@@ -9,6 +9,10 @@ class CollectionsController < ApplicationController
   # GET /collections.json
   def index
     @collections = Collection.where user_id: @user.id
+  end
+
+  def index2
+    @collections = Collection.all
   end
 
   # GET /collections/1

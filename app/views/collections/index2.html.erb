@@ -1,0 +1,28 @@
+
+<div class="text-center page-header"><h1>All Collections </h1></div>
+
+<div>
+<%  @user = User.find(session[:user])
+      if @user.permission_level>=2 %>
+
+  <div class="row large-padding">
+      <% @collections.each do |collection| %>
+          <div class="col-xs-12 col-sm-6 col-lg-6 text-center">
+            <div class="panel panel-info col-xs-12 col-sm-12 col-lg-12">
+              <div class="panel-heading"><strong><%= collection.name %></strong></div>
+              <div class="panel-footer">
+              <div>Created by <%= collection.user.name %> <%= time_ago_in_words(collection.updated_at) %> ago</div>
+              <div><%=link_to 'Show', user_collection_path(collection.user, collection),class:"btn btn-primary" %>
+              
+                <%= link_to 'Edit', edit_user_collection_path(collection.user, collection),class:"btn btn-warning" %>
+                <%= link_to 'Destroy', user_collection_path(collection.user, collection), class:"btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
+              
+              </div></div>
+            </div>
+          </div>
+      <% end %>
+<% else %>
+    <p>You don't have permission to view this content</p>
+  <% end %>
+ 
+</div>
