@@ -92,6 +92,15 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    notes=Note.where user_id: @user.id
+    collections=Collection.where user_id: @user.id
+    notes.each do |note|
+      Note.destroy(note.id)
+    end
+
+    collections.each do |collection|
+      Collection.destroy(collection.id)
+    end
     @user.destroy
     respond_to do |format|
       format.html { redirect_to (@user.id == session[:user] ? logout_path : all_users_path), notice: 'User was successfully destroyed.' }
