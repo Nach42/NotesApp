@@ -20,8 +20,9 @@
         
           <%= link_to 'Edit', edit_user_note_path(note.user, note),class:"btn btn-warning" %>
           <%= link_to 'Destroy', user_note_path(note.user, note), class:"btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
-    <% end %>
+    
         </div></div> </div></div>
+      <% end %>
   <% else %>
     <p>You don't have permission to view this content</p>
   <% end %>

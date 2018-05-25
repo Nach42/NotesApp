@@ -94,7 +94,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to (@user.id == session[:user] ? logout_path : users_path), notice: 'User was successfully destroyed.' }
+      format.html { redirect_to (@user.id == session[:user] ? logout_path : all_users_path), notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
