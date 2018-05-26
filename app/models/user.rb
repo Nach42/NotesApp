@@ -12,7 +12,17 @@ class User < ApplicationRecord
 	validates :name, uniqueness: true, presence: true
 	validates :email, uniqueness: true, presence: true
 	validates :password, presence: true
-	
+
+	before_destroy do
+		notes=Note.where user_id: self.id
+	    collections=Collection.where user_id: self.id
+	    notes.each do |note|
+	      Note.destroy(note.id)
+	    end
+	    collections.each do |collection|
+	      Collection.destroy(collection.id)
+	    end
+	end
 
 	def is_normal_user?
 		self.permission_level >=1
