@@ -40,6 +40,7 @@ Rails.application.routes.draw do
     resources :collections
   end
 
+  get '/all_users/:id', to: 'users#admin', as: "admin"
   get '/notes',to: 'notes#index2',as:'all_notes'
   get '/collections',to: 'collections#index2',as:'all_collections'
   get '/all_users',to: 'users#index2',ass:'all_users'

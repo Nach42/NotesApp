@@ -12,18 +12,20 @@
 
   <tbody>
     <% @users.each do |user| %>
+      <% unless user.permission_level >= 3 || user.id == session[:user]%>
         <tr>
           <td><%= user.name %></td>
           <td><%= user.email %></td>
           
             <td><%= link_to 'Show', user %></td>
             <td><%= link_to 'Edit', edit_user_path(user) %></td>
-            <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }, style: "padding-right:10px" %></td>
-              
+            <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }, style: "padding-right:10px" %></td> 
+            <td><%= link_to (user.permission_level < 2 ? 'Give Admin' : 'Remove admin'), admin_path(user.id) %></td>
         </tr>
       <% end %>
+    <% end %>
   </tbody>
 </table>
 <% else %>
-    <p>You don't have permission to view this content</p>
-  <% end %>
+  <p>You don't have permission to view this content</p>
+<% end %>

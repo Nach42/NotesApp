@@ -23,7 +23,7 @@ class CollectionsController < ApplicationController
   # GET /collections/new
   def new
     unless @user.id == session[:user]
-      redirect_to user_collections_path, alert: "You musn't do this action!"
+      redirect_to user_collections_path, alert: "You can't do this action!"
     end
     @notes = Note.where user: @user
     @collection = Collection.new

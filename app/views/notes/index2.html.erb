@@ -1,31 +1,31 @@
 <div class="page-header">
   <div class="text-center"><h1>All Notes</h1></div>
 </div>
-
-<div>
-  <div class="row large-padding">
-  <%  @user = User.find(session[:user])
-      if @user.permission_level>=2 %>  
-    <% @notes.each do |note| %>        
-        <div class="col-xs-12 col-sm-6 col-lg-6 text-center">
-        <div class="panel panel-warning col-xs-12 col-sm-12 col-lg-12">
-        <div class="panel-heading"><strong><%= note.title %></strong></div>
-        
-        <div class="panel-content" style="padding: 10px"><%= note.body %></div>
-        <div class="panel-footer">
-        <div>Written by <%= note.user.name %> <%= time_ago_in_words(note.updated_at) %> ago</div>
-        
-        <div>
-        <%= link_to 'Show', user_note_path(note.user, note),class:"btn btn-primary" %>
-        
-          <%= link_to 'Edit', edit_user_note_path(note.user, note),class:"btn btn-warning" %>
-          <%= link_to 'Destroy', user_note_path(note.user, note), class:"btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
-    
-        </div></div> </div></div>
-      <% end %>
-  <% else %>
-    <p>You don't have permission to view this content</p>
-  <% end %>
-  </div>
-</div>
+<%  @user = User.find(session[:user])
+      if @user.permission_level>=2 %>
+<table class="table table-stripped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th >Body</th>
+      <th>Author</th>
+      <th colspan="3">Actions</th>
+    </tr>
+  </thead>
+  <tbody>  
+    <% @notes.each do |note| %>  
+    <tr>      
+      <td><%= note.title %></td>
+      <td><%= note.body %></td>
+      <td><%= note.user.name %></td>
+        <td><%= link_to 'Show', user_note_path(note.user, note) %></td>
+        <td><%= link_to 'Edit', edit_user_note_path(note.user, note) %></td>
+        <td><%= link_to 'Destroy', user_note_path(note.user, note), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+  <p>You don't have permission to view this content</p>
+<% end %>
 <br>

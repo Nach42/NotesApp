@@ -8,7 +8,7 @@ class WelcomeController < ApplicationController
     @notes = Note.order(created_at: :desc).where user: @user
     @collections = Collection.order(created_at: :desc).where user_id: @user.id
     if @user.requested_friends.size > 0
-      flash.now[:notice] = 'You have some pending friend requests! You can accept/decline them in the pending requests page!'
+      flash.now[:notice] = "You have some pending friend requests!"
     end
   end
 

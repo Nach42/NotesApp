@@ -1,10 +1,9 @@
 class UsersController < ApplicationController
 
-  before_action :set_user, only: [:show, :edit, :change_pass, :update, :destroy, :shared_notes, :shared_collections]
+  before_action :set_user, only: [:show, :edit, :change_pass, :update, :destroy, :shared_notes, :shared_collections, :admin]
   before_action :set_user2, only: [:my_friends,:pending_requests,:friend_request,:accept_request,:decline_request,:remove_friend,:friends_with]
   before_action :authenticate, except: [:new, :create]
   before_action :validate_user, only: [:edit, :change_pass, :update, :destroy]
-  before_action :is_super_admin, only: []
   helper_method :friends_with
 
   # GET /users
@@ -50,7 +49,7 @@ class UsersController < ApplicationController
           format.json { render json: @user.errors, status: :unprocessable_entity }
         end
       else
-        @user.errors[:password_confirmation] << ": Passwords don't match"
+        @user.errors[:password_confirmation] << ": Passwords doesn't match"
         format.html { render :new }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
@@ -92,18 +91,22 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    notes=Note.where user_id: @user.id
-    collections=Collection.where user_id: @user.id
-    notes.each do |note|
-      Note.destroy(note.id)
-    end
-
-    collections.each do |collection|
-      Collection.destroy(collection.id)
-    end
     @user.destroy
     respond_to do |format|
       format.html { redirect_to (@user.id == session[:user] ? logout_path : all_users_path), notice: 'User was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  def admin
+  	if @user.permission_level < 2
+  		@user.permission_level = 2
+  	elsif @user.permission_level > 1
+  		@user.permission_level = 1
+  	end
+  	@user.save
+  	respond_to do |format|
+      format.html { redirect_to all_users_path, notice: "You changed a user's permission level." }
       format.json { head :no_content }
     end
   end
